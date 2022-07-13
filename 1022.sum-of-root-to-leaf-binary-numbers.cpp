@@ -17,6 +17,11 @@ struct TreeNode {
   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+/*
+  * We just use dfs, however, we should use left shift operation
+  * to finish the work.
+*/
+
 // @lc code=start
 /**
  * Definition for a binary tree node.

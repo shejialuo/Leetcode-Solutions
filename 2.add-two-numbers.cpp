@@ -23,6 +23,12 @@ struct ListNode {
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+/*
+  * Pay attention to the use of operator `?:`, which makes
+  * the code more readable.
+*/
+
 class Solution {
 public:
   ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
@@ -34,24 +40,19 @@ public:
     int C = 0;
 
     while(p1 != nullptr || p2 != nullptr) {
-      int sum = 0;
-      if(p1 == nullptr) {
-        sum = (p2->val + C) % 10;
-        C = (p2->val + C) / 10;
-        p2 = p2->next;
-      } else if(p2 == nullptr) {
-        sum = (p1->val + C) % 10;
-        C = (p1->val + C) / 10;
-        p1 = p1->next;
-      } else {
-        sum = (p1->val + p2->val + C) % 10;
-        C = (p1->val + p2->val + C) / 10;
-        p1 = p1->next;
-        p2 = p2->next;
-      }
+
+      int num1 = p1 ? p1->val : 0;
+      int num2 = p2 ? p2->val : 0;
+
+      int sum = (num1 + num2 + C) % 10;
+      C = (num1 + num2 + C) / 10;
       ListNode* node = new ListNode(sum);
       rear->next = node;
       rear = node;
+
+      if(p1 != nullptr) p1 = p1->next;
+      if(p2 != nullptr) p2 = p2->next;
+
     }
 
     if(C != 0) {

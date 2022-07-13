@@ -4,6 +4,13 @@
  * [9] Palindrome Number
  */
 
+/*
+  * There are two corner case we should care about
+  * When `x` is negative, we should just return false,
+  * however, there are situation that `x` is 40000 or any
+  * other, we should also return false
+*/
+
 // @lc code=start
 class Solution {
 public:

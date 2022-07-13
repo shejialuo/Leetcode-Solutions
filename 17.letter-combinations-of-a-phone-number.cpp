@@ -8,6 +8,12 @@
 #include <vector>
 using namespace std;
 
+/*
+  * The basic backtracing problem. However, in order to imporve the
+  * performance, we should NOT do any dynamic memory operation instead
+  * we should use STATIC string array.
+*/
+
 // @lc code=start
 class Solution {
 private:
@@ -18,15 +24,12 @@ private:
 
   void helper(string& str, const string& digits, int i) {
     if(i == digits.size()) {
-      if(!str.empty()) {
         result.push_back(str);
-      }
     } else {
       int digit = digits[i] - '0';
       for (char c : letter[digit - 2]) {
-        str.insert(str.end(), c);
+        str[i] = c;
         helper(str, digits, i + 1);
-        str.erase(str.end() - 1, str.end());
       }
     }
 
@@ -34,6 +37,8 @@ private:
 public:
   vector<string> letterCombinations(string digits) {
     string str {};
+    str.resize(digits.size());
+    if(digits.empty()) return result;
     helper(str, digits, 0);
     return result;
   }

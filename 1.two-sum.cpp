@@ -8,6 +8,13 @@
 #include <unordered_map>
 using namespace std;
 
+/*
+  * For this question, the answer is easy. When we iterate
+  * the array, if we find the corresponding `target-nums[i]`
+  * doesn't in the `unordered_map`, we add it to. If we find,
+  * we are successful.
+*/
+
 // @lc code=start
 class Solution {
 public:
