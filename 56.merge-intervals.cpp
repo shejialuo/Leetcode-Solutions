@@ -8,6 +8,16 @@
 #include <algorithm>
 using namespace std;
 
+/*
+  * It seems difficult to merge the interval. So we should simplify
+  * the questions just by sort the inveral by the first element.
+  * For the interval [ni, mi], we let n0 < n1 < n2 < ... < ni`, thus
+  * we have three different situations:
+  *   1. When n1 > m0, the interval becomes two [n0, m0], [n1, m1]
+  *   2. When n1 < m0 and m1 <= m0, the interval becomes [n0, m0]
+  *   3. When n1 < m0 and m1 > m0, the interval becomes [n0, m1]
+*/
+
 // @lc code=start
 class Solution {
 public:

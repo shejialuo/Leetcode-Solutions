@@ -12,6 +12,14 @@ struct ListNode {
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+/*
+  * We should maintain the two pointer: slow and fast. However,
+  * in this problem, we may delete the head node, so when we
+  * need to operate on the head node, we should define an
+  * auxiliary node to make the code easier to understand and
+  * clean
+*/
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -26,34 +34,20 @@ struct ListNode {
 class Solution {
 public:
   ListNode* removeNthFromEnd(ListNode* head, int n) {
-    // There is only one element
-    if(head->next == nullptr) {
-      return nullptr;
+    ListNode* aux = new ListNode(0, head);
+    ListNode* slow = aux;
+    ListNode* fast = aux;
+    for(int i = 0; i < n; i++) {
+      fast = fast->next;
     }
-    int i = 0;
-    ListNode* p1 = head;
-    ListNode* p2 = head;
-    while(i <= n && p2 != nullptr) {
-      p2 = p2 -> next;
-      i++;
+    while(fast->next != nullptr) {
+      slow = slow->next;
+      fast = fast->next;
     }
-    // When deleting the first element
-    if(i == n) {
-      ListNode* ans = head->next;
-      head->next = nullptr;
-      return ans;
-    }
-    // When deleting the second element
-    if(i == n - 1) {
-      head->next = head->next->next;
-      return head;
-    }
-    while(p2 != nullptr) {
-      p1 = p1 ->next;
-      p2 = p2-> next;
-    }
-    p1->next = p1->next->next;
-    return head;
+    slow->next = slow->next->next;
+    ListNode* ans = aux->next;
+    delete aux;
+    return ans;
   }
 };
 // @lc code=end

@@ -8,6 +8,15 @@
 #include <string>
 using namespace std;
 
+/*
+  * It's clear that every wel-formed parentheses has
+  * 2 * n size. So we should do static memory operation.
+  * The question is that how to generate the well-formed
+  * parentheses, it's super easy, we should count there
+  * are how many left brackets and right brackets we have
+  * assigned to make sure that the parenthese is well-formed.
+*/
+
 // @lc code=start
 class Solution {
 private:

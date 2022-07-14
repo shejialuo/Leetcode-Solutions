@@ -9,6 +9,10 @@
 #include <unordered_map>
 using namespace std;
 
+/*
+  * Pay attention to the corner case
+*/
+
 // @lc code=start
 class Solution {
 public:
@@ -21,20 +25,14 @@ public:
       if(c == '(' || c == '[' || c == '{') {
         st.push(c);
       } else {
-        if(st.empty()) {
+        if(st.empty() || c != hash[st.top()]) {
           return false;
-        } else if(c == hash[st.top()]) {
-          st.pop();
         } else {
-          return false;
+          st.pop();
         }
       }
     }
-    if(st.empty()) {
-      return true;
-    } else {
-      return false;
-    }
+    return st.empty();
   }
 };
 // @lc code=end

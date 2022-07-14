@@ -7,22 +7,25 @@
 #include <string>
 using namespace std;
 
+/*
+  * It's important to figure out the change of state
+*/
+
 // @lc code=start
 class Solution {
 public:
   int lengthOfLastWord(string s) {
     int ans = 0;
-    for(int i = 0; i < s.size();) {
-      if(s[i] == ' ') {
-        while(s[i] == ' ') i++;
-        // Not the last word
-        if(i != s.size()) {
-          // Reset `ans`.
-          ans = 0;
-        }
+    bool newWord = true;
+    for(char c : s) {
+      if(c == ' ') {
+        newWord = true;
       } else {
+        if(newWord) {
+          ans = 0;
+          newWord = false;
+        }
         ans++;
-        i++;
       }
     }
     return ans;
