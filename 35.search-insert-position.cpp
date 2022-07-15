@@ -7,20 +7,24 @@
 #include <vector>
 using namespace std;
 
+/*
+  * Binary Search Application
+*/
+
 // @lc code=start
 class Solution {
 public:
   int searchInsert(vector<int>& nums, int target) {
-    int i = 0, j = nums.size(), mid = 0;
-    while(i < j) {
-      mid = (i + j) / 2;
+    int start = 0, end = nums.size(), mid = 0;
+    while(start < end) {
+      mid = (start + end) / 2;
       if(nums[mid] < target) {
-        i = mid + 1;
+        start = mid + 1;
       } else {
-        j = mid;
+        end = mid;
       }
     }
-    return i;
+    return start;
   }
 };
 // @lc code=end
