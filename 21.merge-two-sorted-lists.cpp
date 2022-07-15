@@ -12,6 +12,11 @@ struct ListNode {
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+/*
+  * In this problem, we do not need to allocate memory
+  * for new node, we just re-organize the node.
+*/
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -26,52 +31,23 @@ struct ListNode {
 class Solution {
 public:
   ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-    ListNode* ptr1 = list1;
-    ListNode* ptr2 = list2;
-    ListNode* ptr = nullptr;
-    ListNode* result = nullptr;
-    while(ptr1 != nullptr && ptr2 != nullptr) {
-      int lessValue = 0;
-      if(ptr1->val <= ptr2->val) {
-        lessValue = ptr1->val;
-        ptr1 = ptr1->next;
+    ListNode* aux = new ListNode(-1);
+    ListNode* p = aux;
+    while(list1 != nullptr && list2 != nullptr) {
+      if(list1->val < list2->val) {
+        p->next = list1;
+        list1 = list1->next;
       } else {
-        lessValue = ptr2->val;
-        ptr2 = ptr2->next;
+        p->next = list2;
+        list2 = list2->next;
       }
-      ListNode* node = new ListNode(lessValue, nullptr);
-      if(ptr == nullptr) {
-        result = node;
-      } else {
-        ptr->next = node;
-      }
-      ptr = node;
+      p = p->next;
     }
+    p->next = list1 == nullptr ? list2 : list1;
 
-    while (ptr1 != nullptr) {
-      ListNode* node = new ListNode(ptr1->val, nullptr);
-      if(ptr == nullptr) {
-        result = node;
-      } else {
-        ptr->next = node;
-      }
-      ptr = node;
-      ptr1 = ptr1->next;
-    }
-
-    while (ptr2 != nullptr) {
-
-      ListNode* node = new ListNode(ptr2->val, nullptr);
-      if(ptr == nullptr) {
-        result = node;
-      } else {
-        ptr->next = node;
-      }
-      ptr = node;
-      ptr2 = ptr2->next;
-    }
-
-    return result;
+    ListNode* ans = aux->next;
+    delete aux;
+    return ans;
   }
 };
 // @lc code=end

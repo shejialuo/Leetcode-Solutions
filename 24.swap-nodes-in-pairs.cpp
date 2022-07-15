@@ -4,8 +4,6 @@
  * [24] Swap Nodes in Pairs
  */
 
-// TODO: need to refactor, use a simpler way.
-
 struct ListNode {
   int val;
   ListNode *next;
@@ -13,6 +11,26 @@ struct ListNode {
   ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
+/*
+  * The most simplest idea is that we just use a sentinel
+  * to swap every adajacent nodes. However, that's a little
+  * tedious. We should think about this question in a higher
+  * level.
+  *
+  * If we want to swap the ajacent node n1 and n2, the process
+  * is easy, just make `n1->next = n2->next` and `n2->next = n1`.
+  * But the question is that we should swap every adjacent node,
+  * this doeson work.
+  *
+  * For example, 1->2->3->4, if we use the idea above, we would
+  * get 2->1->3 and 4->3. So the problem is how to make change the
+  * relationship 1->3 to 1->4. It may seem that we need to operate
+  * on the `node->next`. We should convert the way, instead of
+  * changing the realtionship, why not change the `ListNode*`'s value?
+  *
+  * So this problem we use a pointer to pointer to slove this question.
+*/
 
 // @lc code=start
 /**
@@ -28,19 +46,20 @@ struct ListNode {
 class Solution {
 public:
   ListNode* swapPairs(ListNode* head) {
-    ListNode* auxNode = new ListNode(-1);
-    auxNode->next = head;
-    ListNode* ans = auxNode;
-    while(auxNode->next != nullptr && auxNode->next->next != nullptr) {
-      ListNode* adjacentPrevious = auxNode->next;
-      ListNode* adjacentLatter = auxNode->next->next;
-      ListNode* temp = adjacentLatter->next;
-      adjacentLatter->next = adjacentPrevious;
-      auxNode->next = adjacentLatter;
-      adjacentPrevious->next = temp;
-      auxNode = adjacentPrevious;
+    ListNode** p = &head;
+    ListNode* adjacentFirst{};
+    ListNode* adjacentSecond{};
+    while((adjacentFirst = *p) && (adjacentSecond =(*p)->next)) {
+      // Here we do nomral LinkNode swap
+      adjacentFirst->next = adjacentSecond->next;
+      adjacentSecond->next = adjacentFirst;
+
+      // Now we make current pointer to ListNode* to
+      // be the value of the `adajacentSecond`.
+      *p = adjacentSecond;
+      p = &(adjacentFirst->next);
     }
-    return ans->next;
+    return head;
   }
 };
 // @lc code=end
