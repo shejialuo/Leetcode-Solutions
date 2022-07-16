@@ -4,7 +4,17 @@
  * [437] Path Sum III
  */
 
-// TODO: Need to refactor, there are too many overlap.
+#include <unordered_map>
+using namespace std;
+
+/*
+  * Actually, we could brute-forcely solve this question,
+  * just use dfs for every subTree. However, there would
+  * be many overlaps.
+  *
+  * So use dynamic programming just remember the prefix we
+  * add. Simple idea.
+*/
 
 struct TreeNode {
   int val;
@@ -29,27 +39,24 @@ struct TreeNode {
  */
 class Solution {
 private:
+  unordered_map<long, int> prefix {};
   int pathSumHelper(TreeNode* node, long sum ,int targetSum) {
     if(node != nullptr) {
+      int ret = 0;
       sum += node->val;
-      int val = 0;
-      if(sum == targetSum) {
-        val = 1;
-      }
-      return val
-            +pathSumHelper(node->left, sum, targetSum)
-            +pathSumHelper(node->right, sum, targetSum);
+      ret += prefix[sum - targetSum];
+      prefix[sum]++;
+      ret += pathSumHelper(node->left, sum, targetSum);
+      ret += pathSumHelper(node->right, sum, targetSum);
+      prefix[sum]--;
+      return ret;
     }
     return 0;
   }
 public:
   int pathSum(TreeNode* root, int targetSum) {
-    if(root != nullptr) {
-      return pathSumHelper(root, 0, targetSum)
-            +pathSum(root->left, targetSum)
-            +pathSum(root->right, targetSum);
-    }
-    return 0;
+    prefix[0] = 1;
+    return pathSumHelper(root, 0, targetSum);
   }
 };
 // @lc code=end
