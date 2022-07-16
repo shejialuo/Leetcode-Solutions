@@ -8,8 +8,6 @@
 #include <string>
 using namespace std;
 
-// TODO: need to refactor
-
 // @lc code=start
 class Solution {
 public:
