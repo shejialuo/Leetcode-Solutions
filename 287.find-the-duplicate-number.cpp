@@ -4,11 +4,19 @@
  * [287] Find the Duplicate Number
  */
 
-// TODO: Write more solutions.
-
 #include <vector>
+#include <algorithm>
 #include <cmath>
 using namespace std;
+
+/*
+  * This question can be used by four ways, and this is really
+  * a good problem because of its extend.
+  *
+  * 1. In-place hash
+  * 2. Floyd circle detection
+  * 3. Sort
+*/
 
 // @lc code=start
 class Solution {
@@ -34,9 +42,40 @@ public:
 
   /*
     * Floyd circle detection
+    * Assume each nums value as an address like in linked list node
+    * address. Then since there is one number with duplicates, that
+    * means there are multiple of the same address, so it is a
+    * cycle just like in linked list.
   */
   int folydCircleSolution(vector<int>& nums) {
+    int hare = nums[0], tortoise = nums[0];
+    do {
+      hare = nums[nums[hare]];
+      tortoise = nums[tortoise];
+    }while(hare != tortoise);
+    tortoise = nums[0];
+    while(hare != tortoise) {
+      hare = nums[hare];
+      tortoise = nums[tortoise];
+    }
+    return hare;
+  }
 
+  /*
+    * Sort
+    * For sorting, the idea is simple, we just find
+    * nums[i] == nums[i] + 1
+  */
+  int sortSolution(vector<int>& nums) {
+    sort(nums.begin(), nums.end());
+    int duplicate = 0;
+    for(int i = 0; i < nums.size() - 1; ++i) {
+      if(nums[i] == nums[i + 1]) {
+        duplicate = nums[i];
+        break;
+      }
+    }
+    return duplicate;
   }
 
   int findDuplicate(vector<int>& nums) {
