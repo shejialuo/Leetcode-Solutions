@@ -4,7 +4,7 @@
  * [494] Target Sum
  */
 
-// Need to refactor
+// TODO: Add dynamic programming solution
 
 #include <vector>
 using namespace std;
@@ -22,7 +22,6 @@ private:
       helper(nums, i + 1, sum + nums[i], target);
       helper(nums, i + 1, sum - nums[i], target);
     }
-
   }
 public:
   int findTargetSumWays(vector<int>& nums, int target) {
