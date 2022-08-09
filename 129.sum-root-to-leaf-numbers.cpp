@@ -26,23 +26,21 @@ struct TreeNode {
  * };
  */
 class Solution {
-public:
-
-  void dfs(TreeNode* node, int num, int& ans) {
+private:
+  int sumNumbersHelper(TreeNode* node, int sum) {
     if(node != nullptr) {
-      num = num * 10 + node->val;
+      sum = node->val + sum * 10;
       if(node->left == nullptr && node->right == nullptr) {
-        ans += num;
+        return sum;
       }
-      dfs(node->left, num, ans);
-      dfs(node->right, num, ans);
+      return sumNumbersHelper(node->left, sum)
+            +sumNumbersHelper(node->right, sum);
     }
+    return 0;
   }
-
+public:
   int sumNumbers(TreeNode* root) {
-    int ans = 0;
-    dfs(root, 0, ans);
-    return ans;
+    return sumNumbersHelper(root, 0);
   }
 };
 // @lc code=end
