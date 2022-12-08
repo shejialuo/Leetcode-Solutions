@@ -4,34 +4,34 @@
  * [520] Detect Capital
  */
 
-#include <string>
 #include <cctype>
+#include <string>
 using namespace std;
 
 // @lc code=start
 class Solution {
 public:
+  /**
+   *
+   * @param word the word
+   * @return true All letters in this word are capitals
+   *              All letters in this word are not capitals
+   *              Only the first letter in this word is capital
+   * @return false
+   */
   bool detectCapitalUse(string word) {
-    if(word.size() == 1) return true;
-    bool isFirstUpper = false;
-    bool isRemainAllUpper = true;
-    bool isRemainAllLower = true;
-    if(isupper(word[0])) {
-      isFirstUpper = true;
+    if (word.size() >= 2 && islower(word[0]) && isupper(word[1])) {
+      return false;
     }
-    for(int i = 1; i < word.size(); ++i) {
-      if(isupper(word[i])) {
-        isRemainAllUpper = isRemainAllUpper && true;
-        isRemainAllLower = false;
-      } else {
-        isRemainAllUpper = false;
-        isRemainAllLower = isRemainAllLower && true;
+
+    // A wonderful abstraction.
+    for (size_t i = 2; i < word.size(); ++i) {
+      if (islower(word[i]) ^ islower(word[1])) {
+        return false;
       }
     }
-    return (isFirstUpper && (isRemainAllLower || isRemainAllUpper))
-           || (!isFirstUpper) && isRemainAllLower;
 
+    return true;
   }
 };
 // @lc code=end
-
