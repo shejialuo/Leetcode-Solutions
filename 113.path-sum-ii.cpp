@@ -30,15 +30,15 @@ struct TreeNode {
  */
 class Solution {
 private:
-  vector<vector<int>> ans {};
-public:
+  vector<vector<int>> ans{};
 
-  void dfs(TreeNode* node, vector<int>& path, int& targetSum, int sum) {
-    if(node != nullptr) {
+public:
+  void dfs(TreeNode *node, vector<int> &path, int &targetSum, int sum) {
+    if (node != nullptr) {
       sum += node->val;
       path.push_back(node->val);
-      if(node->left == nullptr && node->right == nullptr) {
-        if(sum == targetSum) {
+      if (node->left == nullptr && node->right == nullptr) {
+        if (sum == targetSum) {
           ans.push_back(path);
         }
       }
@@ -48,11 +48,10 @@ public:
     }
   }
 
-  vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+  vector<vector<int>> pathSum(TreeNode *root, int targetSum) {
     vector<int> path{};
     dfs(root, path, targetSum, 0);
     return ans;
   }
 };
 // @lc code=end
-

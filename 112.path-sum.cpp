@@ -26,22 +26,20 @@ struct TreeNode {
  * };
  */
 class Solution {
-public:
-  bool dfs(TreeNode* node, int sum, const int &targetSum) {
-    if(node != nullptr) {
+private:
+  bool dfs(TreeNode *node, int sum, const int &targetSum) {
+    if (node != nullptr) {
       sum += node->val;
-      if(node->left == nullptr && node->right == nullptr) {
-        if(sum == targetSum)
+      if (node->left == nullptr && node->right == nullptr) {
+        if (sum == targetSum)
           return true;
       }
-      return dfs(node->left, sum, targetSum)
-            || dfs(node->right, sum, targetSum);
+      return dfs(node->left, sum, targetSum) || dfs(node->right, sum, targetSum);
     }
     return false;
   }
-  bool hasPathSum(TreeNode* root, int targetSum) {
-    return dfs(root, 0, targetSum);
-  }
+
+public:
+  bool hasPathSum(TreeNode *root, int targetSum) { return dfs(root, 0, targetSum); }
 };
 // @lc code=end
-
