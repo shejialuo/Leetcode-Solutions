@@ -13,9 +13,9 @@ struct ListNode {
 };
 
 /*
-  * In this problem, we do not need to allocate memory
-  * for new node, we just re-organize the node.
-*/
+ * In this problem, we do not need to allocate memory
+ * for new node, we just re-organize the node.
+ */
 
 // @lc code=start
 /**
@@ -30,11 +30,11 @@ struct ListNode {
  */
 class Solution {
 public:
-  ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-    ListNode* aux = new ListNode(-1);
-    ListNode* p = aux;
-    while(list1 != nullptr && list2 != nullptr) {
-      if(list1->val < list2->val) {
+  ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
+    ListNode *aux = new ListNode(-1);
+    ListNode *p = aux;
+    while (list1 != nullptr && list2 != nullptr) {
+      if (list1->val < list2->val) {
         p->next = list1;
         list1 = list1->next;
       } else {
@@ -45,10 +45,9 @@ public:
     }
     p->next = list1 == nullptr ? list2 : list1;
 
-    ListNode* ans = aux->next;
+    ListNode *ans = aux->next;
     delete aux;
     return ans;
   }
 };
 // @lc code=end
-
