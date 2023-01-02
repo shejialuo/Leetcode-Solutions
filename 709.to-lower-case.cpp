@@ -11,8 +11,8 @@ using namespace std;
 class Solution {
 public:
   string toLowerCase(string s) {
-    for(int i = 0; i < s.size(); ++i) {
-      if('A' <= s[i] && s[i] <= 'Z') {
+    for (int i = 0; i < s.size(); ++i) {
+      if ('A' <= s[i] && s[i] <= 'Z') {
         s[i] += 'a' - 'A';
       }
     }
@@ -20,4 +20,3 @@ public:
   }
 };
 // @lc code=end
-

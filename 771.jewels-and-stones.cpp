@@ -11,16 +11,16 @@ using namespace std;
 class Solution {
 public:
   int numJewelsInStones(string jewels, string stones) {
-    bool hash['z' - 'A' + 1] {};
+    bool hash['z' - 'A' + 1]{};
     int ans = 0;
-    for(char c: jewels) {
+    for (char c : jewels) {
       hash[c - 'A'] = true;
     }
-    for(char c: stones) {
-      if(hash[c - 'A']) ans++;
+    for (char c : stones) {
+      if (hash[c - 'A'])
+        ans++;
     }
     return ans;
   }
 };
 // @lc code=end
-

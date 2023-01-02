@@ -10,19 +10,24 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-  bool validMountainArray(vector<int>& arr) {
-    if(arr.size() < 3) return false;
+  bool validMountainArray(vector<int> &arr) {
+    if (arr.size() < 3) {
+      return false;
+    }
     int i = 0;
-    while(i < arr.size() - 1 && arr[i] < arr[i + 1]) {
+    while (i < arr.size() - 1 && arr[i] < arr[i + 1]) {
       i++;
     }
-    if(i == arr.size() - 1 || i == 0) return false;
-    while(i < arr.size() - 1 && arr[i] > arr[i + 1]) {
+    if (i == arr.size() - 1 || i == 0) {
+      return false;
+    }
+    while (i < arr.size() - 1 && arr[i] > arr[i + 1]) {
       i++;
     }
-    if(i != arr.size() - 1) return false;
+    if (i != arr.size() - 1) {
+      return false;
+    }
     return true;
   }
 };
 // @lc code=end
-

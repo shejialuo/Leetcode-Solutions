@@ -4,8 +4,8 @@
  * [1022] Sum of Root To Leaf Binary Numbers
  */
 
-#include <string>
 #include <cmath>
+#include <string>
 using namespace std;
 
 struct TreeNode {
@@ -14,13 +14,14 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 /*
-  * We just use dfs, however, we should use left shift operation
-  * to finish the work.
-*/
+ * We just use dfs, however, we should use left shift operation
+ * to finish the work.
+ */
 
 // @lc code=start
 /**
@@ -31,24 +32,24 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 private:
-  int helper(TreeNode* node, int val) {
-    if (node == nullptr) return 0;
+  int helper(TreeNode *node, int val) {
+    if (node == nullptr)
+      return 0;
 
     val = (val << 1) | node->val;
-    if(node->left == nullptr && node->right == nullptr) {
-        return val;
+    if (node->left == nullptr && node->right == nullptr) {
+      return val;
     }
     return helper(node->left, val) + helper(node->right, val);
   }
+
 public:
-  int sumRootToLeaf(TreeNode* root) {
-    return helper(root, 0);
-  }
+  int sumRootToLeaf(TreeNode *root) { return helper(root, 0); }
 };
 // @lc code=end
-
