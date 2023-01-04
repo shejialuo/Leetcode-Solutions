@@ -12,20 +12,22 @@ using namespace std;
 // @lc code=start
 class Solution {
 private:
-  bool validPalindromeHelper(string & s) {
+  bool validPalindromeHelper(string &s) {
     int i = 0, j = s.size() - 1;
-    while(i < j) {
-      if(s[i] != s[j])  {
-          return false;
+    while (i < j) {
+      if (s[i] != s[j]) {
+        return false;
       }
-      i++; j--;
+      i++;
+      j--;
     }
     return true;
   }
+
 public:
   bool validPalindrome(string s) {
     bool ans = validPalindromeHelper(s);
-    for(int i = 0; i < s.size(); ++i) {
+    for (int i = 0; i < s.size(); ++i) {
       string s_ = s;
       s_.erase(i, 1);
       ans = ans || validPalindromeHelper(s_);
@@ -34,4 +36,3 @@ public:
   }
 };
 // @lc code=end
-

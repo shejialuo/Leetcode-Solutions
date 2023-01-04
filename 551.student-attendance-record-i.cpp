@@ -13,16 +13,16 @@ public:
   bool checkRecord(string s) {
     int absentNum = 0;
     int consecutiveLateNum = 0;
-    for(char c: s) {
-      if(c == 'L') {
+    for (char c : s) {
+      if (c == 'L') {
         consecutiveLateNum++;
       } else {
         consecutiveLateNum = 0;
-        if(c == 'A') {
+        if (c == 'A') {
           absentNum++;
         }
       }
-      if(absentNum >= 2 || consecutiveLateNum >= 3) {
+      if (absentNum >= 2 || consecutiveLateNum >= 3) {
         return false;
       }
     }

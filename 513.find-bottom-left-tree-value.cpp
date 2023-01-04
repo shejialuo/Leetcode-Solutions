@@ -4,16 +4,15 @@
  * [513] Find Bottom Left Tree Value
  */
 
-
 struct TreeNode {
   int val;
   TreeNode *left;
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
-
 
 // @lc code=start
 /**
@@ -24,18 +23,19 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 private:
-  int maxDepth {0};
-  int ans {0};
-public:
+  int maxDepth{0};
+  int ans{0};
 
-  void dfs(TreeNode* node, int depth) {
-    if(node != nullptr) {
-      if(depth > maxDepth) {
+public:
+  void dfs(TreeNode *node, int depth) {
+    if (node != nullptr) {
+      if (depth > maxDepth) {
         ans = node->val;
         maxDepth = depth;
       }
@@ -44,7 +44,7 @@ public:
     }
   }
 
-  int findBottomLeftValue(TreeNode* root) {
+  int findBottomLeftValue(TreeNode *root) {
     maxDepth = -1;
     ans = 0;
     dfs(root, 0);
@@ -52,4 +52,3 @@ public:
   }
 };
 // @lc code=end
-

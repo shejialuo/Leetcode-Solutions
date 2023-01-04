@@ -22,7 +22,8 @@ public:
     for (auto &&type : candyType) {
       types.insert(type);
     }
-    return types.size() <= candyType.size() / 2 ? types.size() : candyType.size() / 2;
+    return types.size() <= candyType.size() / 2 ? types.size()
+                                                : candyType.size() / 2;
   }
 };
 // @lc code=end

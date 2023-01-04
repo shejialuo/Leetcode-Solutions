@@ -13,9 +13,9 @@ using namespace std;
 class Solution {
 private:
   int ans = 0;
-  void helper(vector<int>& nums, int i, int sum, int target) {
-    if(i == nums.size()) {
-      if(sum == target) {
+  void helper(vector<int> &nums, int i, int sum, int target) {
+    if (i == nums.size()) {
+      if (sum == target) {
         ans++;
       }
     } else {
@@ -23,11 +23,11 @@ private:
       helper(nums, i + 1, sum - nums[i], target);
     }
   }
+
 public:
-  int findTargetSumWays(vector<int>& nums, int target) {
+  int findTargetSumWays(vector<int> &nums, int target) {
     helper(nums, 0, 0, target);
     return ans;
   }
 };
 // @lc code=end
-

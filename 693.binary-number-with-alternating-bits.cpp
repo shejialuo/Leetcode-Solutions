@@ -8,7 +8,7 @@
 class Solution {
 public:
   bool hasAlternatingBits(int n) {
-    while(n != 0) {
+    while (n != 0) {
       if ((n & 0x01) == ((n & 0x02) >> 1)) {
         return false;
       }
@@ -18,4 +18,3 @@ public:
   }
 };
 // @lc code=end
-
