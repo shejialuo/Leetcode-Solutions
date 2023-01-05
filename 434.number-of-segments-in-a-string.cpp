@@ -12,10 +12,10 @@ class Solution {
 public:
   int countSegments(string s) {
     bool isNewWord = false;
-    int segmentNumber= 0;
-    for(char c : s) {
-      if(c == ' ') {
-        if(isNewWord) {
+    int segmentNumber = 0;
+    for (char c : s) {
+      if (c == ' ') {
+        if (isNewWord) {
           segmentNumber++;
           isNewWord = false;
         }
@@ -23,9 +23,9 @@ public:
         isNewWord = true;
       }
     }
-    if(isNewWord) segmentNumber++;
+    if (isNewWord)
+      segmentNumber++;
     return segmentNumber;
   }
 };
 // @lc code=end
-

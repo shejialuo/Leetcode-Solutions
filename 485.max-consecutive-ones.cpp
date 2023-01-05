@@ -10,15 +10,15 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-  int findMaxConsecutiveOnes(vector<int>& nums) {
+  int findMaxConsecutiveOnes(vector<int> &nums) {
     int consecutiveOnes = 0, maxConsecutiveOnes = 0;
-    for(int num: nums) {
-      if(num == 1) {
+    for (int num : nums) {
+      if (num == 1) {
         consecutiveOnes++;
       } else {
         consecutiveOnes = 0;
       }
-      if(consecutiveOnes > maxConsecutiveOnes) {
+      if (consecutiveOnes > maxConsecutiveOnes) {
         maxConsecutiveOnes = consecutiveOnes;
       }
     }
@@ -26,4 +26,3 @@ public:
   }
 };
 // @lc code=end
-

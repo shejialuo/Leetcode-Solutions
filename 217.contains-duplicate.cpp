@@ -4,17 +4,17 @@
  * [217] Contains Duplicate
  */
 
-#include <vector>
 #include <unordered_set>
+#include <vector>
 using namespace std;
 
 // @lc code=start
 class Solution {
 public:
-  bool containsDuplicate(vector<int>& nums) {
-    unordered_set<int> hash {};
-    for(int i = 0; i < nums.size(); ++i) {
-      if(hash.count(nums[i]) != 0) {
+  bool containsDuplicate(vector<int> &nums) {
+    unordered_set<int> hash{};
+    for (int i = 0; i < nums.size(); ++i) {
+      if (hash.count(nums[i]) != 0) {
         return true;
       }
       hash.insert(nums[i]);
@@ -23,4 +23,3 @@ public:
   }
 };
 // @lc code=end
-

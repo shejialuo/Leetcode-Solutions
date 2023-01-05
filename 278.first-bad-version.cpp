@@ -14,9 +14,9 @@ class Solution {
 public:
   int firstBadVersion(int n) {
     int start = 1, end = n;
-    while(start < end) {
+    while (start < end) {
       int mid = (end - start) / 2 + start;
-      if(isBadVersion(mid)) {
+      if (isBadVersion(mid)) {
         end = mid;
       } else {
         start = mid + 1;
@@ -26,4 +26,3 @@ public:
   }
 };
 // @lc code=end
-

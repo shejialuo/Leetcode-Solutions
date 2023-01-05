@@ -8,10 +8,10 @@
 class Solution {
 public:
   int addDigits(int num) {
-    while(num >= 10) {
+    while (num >= 10) {
       int n = num;
       num = 0;
-      while(n) {
+      while (n) {
         num += n % 10;
         n /= 10;
       }
@@ -20,4 +20,3 @@ public:
   }
 };
 // @lc code=end
-

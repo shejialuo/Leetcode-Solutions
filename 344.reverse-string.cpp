@@ -10,13 +10,12 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-  void reverseString(vector<char>& s) {
+  void reverseString(vector<char> &s) {
     int pre = 0;
     int end = s.size() - 1;
-    while(pre < end) {
+    while (pre < end) {
       swap(s[pre++], s[end--]);
     }
   }
 };
 // @lc code=end
-

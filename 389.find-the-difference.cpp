@@ -11,12 +11,11 @@ using namespace std;
 class Solution {
 public:
   char findTheDifference(string s, string t) {
-    char ans {};
-    for(size_t i = 0; i < s.size(); ++i) {
+    char ans{};
+    for (size_t i = 0; i < s.size(); ++i) {
       ans ^= s[i] ^ t[i];
     }
     return ans ^ t.back();
   }
 };
 // @lc code=end
-

@@ -4,21 +4,19 @@
  * [429] N-ary Tree Level Order Traversal
  */
 
-#include <vector>
 #include <queue>
+#include <vector>
 using namespace std;
 
 class Node {
 public:
   int val;
-  vector<Node*> children;
+  vector<Node *> children;
   Node() {}
 
-  Node(int _val) {
-    val = _val;
-  }
+  Node(int _val) { val = _val; }
 
-  Node(int _val, vector<Node*> _children) {
+  Node(int _val, vector<Node *> _children) {
     val = _val;
     children = _children;
   }
@@ -47,19 +45,19 @@ public:
 
 class Solution {
 public:
-  vector<vector<int>> levelOrder(Node* root) {
-    vector<vector<int>> ans {};
-    queue<Node*> qu;
-    if(root != nullptr) {
+  vector<vector<int>> levelOrder(Node *root) {
+    vector<vector<int>> ans{};
+    queue<Node *> qu;
+    if (root != nullptr) {
       qu.push(root);
     }
-    while(!qu.empty()) {
+    while (!qu.empty()) {
       int length = qu.size();
-      vector<int> layer {};
-      for(int i = 0; i < length; ++i) {
-        Node* node = qu.front();
+      vector<int> layer{};
+      for (int i = 0; i < length; ++i) {
+        Node *node = qu.front();
         layer.push_back(node->val);
-        for(Node* child: node->children) {
+        for (Node *child : node->children) {
           qu.push(child);
         }
         qu.pop();
@@ -70,4 +68,3 @@ public:
   }
 };
 // @lc code=end
-

@@ -24,10 +24,9 @@ struct ListNode {
  */
 class Solution {
 public:
-  void deleteNode(ListNode* node) {
+  void deleteNode(ListNode *node) {
     node->val = node->next->val;
-    node->next= node->next->next;
+    node->next = node->next->next;
   }
 };
 // @lc code=end
-
