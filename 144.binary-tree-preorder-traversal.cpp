@@ -4,8 +4,8 @@
  * [144] Binary Tree Preorder Traversal
  */
 
-#include <vector>
 #include <stack>
+#include <vector>
 using namespace std;
 
 struct TreeNode {
@@ -14,7 +14,8 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 // @lc code=start
@@ -26,22 +27,23 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-  vector<int> preorderTraversal(TreeNode* root) {
-    vector<int> ans {};
-    stack<TreeNode*> st;
-    while(root != nullptr || !st.empty()) {
-      while(root != nullptr) {
+  vector<int> preorderTraversal(TreeNode *root) {
+    vector<int> ans{};
+    stack<TreeNode *> st;
+    while (root != nullptr || !st.empty()) {
+      while (root != nullptr) {
         ans.push_back(root->val);
         st.push(root);
-        root = root -> left;
+        root = root->left;
       }
-      if(!st.empty()) {
-        TreeNode* node = st.top();
+      if (!st.empty()) {
+        TreeNode *node = st.top();
         root = node->right;
         st.pop();
       }
@@ -50,4 +52,3 @@ public:
   }
 };
 // @lc code=end
-

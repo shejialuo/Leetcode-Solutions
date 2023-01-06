@@ -10,7 +10,7 @@ using namespace std;
 struct ListNode {
   int val;
   ListNode *next;
-  ListNode(int x): val(x), next(NULL) {}
+  ListNode(int x) : val(x), next(NULL) {}
 };
 
 // @lc code=start
@@ -25,22 +25,22 @@ struct ListNode {
 class Solution {
 public:
   ListNode *detectCycle(ListNode *head) {
-    ListNode* slowPointer = head;
-    ListNode* fastPointer = head;
-    if(slowPointer == nullptr) {
+    ListNode *slowPointer = head;
+    ListNode *fastPointer = head;
+    if (slowPointer == nullptr) {
       return head;
     }
 
-    while(fastPointer) {
+    while (fastPointer) {
       fastPointer = fastPointer->next;
-      if(fastPointer != nullptr) {
+      if (fastPointer != nullptr) {
         slowPointer = slowPointer->next;
         fastPointer = fastPointer->next;
       }
 
-      if(fastPointer == slowPointer) {
+      if (fastPointer == slowPointer) {
         slowPointer = head;
-        while(fastPointer != slowPointer) {
+        while (fastPointer != slowPointer) {
           slowPointer = slowPointer->next;
           fastPointer = fastPointer->next;
         }
@@ -51,4 +51,3 @@ public:
   }
 };
 // @lc code=end
-

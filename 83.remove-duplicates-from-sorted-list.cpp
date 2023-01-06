@@ -25,14 +25,14 @@ struct ListNode {
  */
 class Solution {
 public:
-  ListNode* deleteDuplicates(ListNode* head) {
-    ListNode* ans = head;
-    if(head == nullptr) {
+  ListNode *deleteDuplicates(ListNode *head) {
+    ListNode *ans = head;
+    if (head == nullptr) {
       return ans;
     }
 
-    while(head && head->next) {
-      if(head->val == head->next->val) {
+    while (head && head->next) {
+      if (head->val == head->next->val) {
         head->next = head->next->next;
       } else {
         head = head->next;
@@ -43,4 +43,3 @@ public:
   }
 };
 // @lc code=end
-

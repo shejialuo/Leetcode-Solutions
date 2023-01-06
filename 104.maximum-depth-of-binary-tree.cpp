@@ -13,7 +13,8 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 // @lc code=start
@@ -25,18 +26,17 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-
-  int maxDepth(TreeNode* root) {
-    if(root != nullptr) {
+  int maxDepth(TreeNode *root) {
+    if (root != nullptr) {
       return max(maxDepth(root->left) + 1, maxDepth(root->right) + 1);
     }
     return 0;
   }
 };
 // @lc code=end
-

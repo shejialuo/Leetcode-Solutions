@@ -25,20 +25,19 @@ struct ListNode {
  */
 class Solution {
 public:
-  ListNode* removeElements(ListNode* head, int val) {
-    ListNode* aux = new ListNode(0, head);
-    ListNode* ptr = aux;
-    while(ptr && ptr->next) {
-      if(ptr->next->val == val) {
-          ptr->next = ptr->next->next;
+  ListNode *removeElements(ListNode *head, int val) {
+    ListNode *aux = new ListNode(0, head);
+    ListNode *ptr = aux;
+    while (ptr && ptr->next) {
+      if (ptr->next->val == val) {
+        ptr->next = ptr->next->next;
       } else {
-          ptr = ptr->next;
+        ptr = ptr->next;
       }
     }
-    ListNode* result = aux->next;
+    ListNode *result = aux->next;
     delete aux;
     return result;
   }
 };
 // @lc code=end
-

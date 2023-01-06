@@ -4,8 +4,8 @@
  * [94] Binary Tree Inorder Traversal
  */
 
-#include <vector>
 #include <stack>
+#include <vector>
 using namespace std;
 
 struct TreeNode {
@@ -14,7 +14,8 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 // @lc code=start
@@ -26,30 +27,29 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-  vector<int> inorderTraversal(TreeNode* root) {
-    stack<TreeNode*> st;
+  vector<int> inorderTraversal(TreeNode *root) {
+    stack<TreeNode *> st;
     vector<int> ans{};
-    while(root != nullptr | !st.empty()) {
-      while(root != nullptr) {
+    while (root != nullptr | !st.empty()) {
+      while (root != nullptr) {
         st.push(root);
         root = root->left;
       }
 
-      if(!st.empty()) {
-        TreeNode* node = st.top();
+      if (!st.empty()) {
+        TreeNode *node = st.top();
         ans.push_back(node->val);
         st.pop();
         root = node->right;
       }
-
     }
     return ans;
   }
 };
 // @lc code=end
-

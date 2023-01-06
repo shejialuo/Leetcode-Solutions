@@ -25,21 +25,21 @@ struct ListNode {
  */
 class Solution {
 public:
-  ListNode* deleteDuplicates(ListNode* head) {
-    ListNode* aux = new ListNode(0, head);
-    ListNode* ptr = aux;
-    while(ptr->next != nullptr) {
-      ListNode* start = ptr->next;
+  ListNode *deleteDuplicates(ListNode *head) {
+    ListNode *aux = new ListNode(0, head);
+    ListNode *ptr = aux;
+    while (ptr->next != nullptr) {
+      ListNode *start = ptr->next;
       bool isSame = false;
-      while(start != nullptr && start->next != nullptr) {
-          if(start->val == start->next->val) {
-              isSame = true;
-              start->next = start->next->next;
-          } else {
-            break;
-          }
+      while (start != nullptr && start->next != nullptr) {
+        if (start->val == start->next->val) {
+          isSame = true;
+          start->next = start->next->next;
+        } else {
+          break;
+        }
       }
-      if(isSame) {
+      if (isSame) {
         ptr->next = start->next;
       } else {
         ptr = ptr->next;
@@ -49,4 +49,3 @@ public:
   }
 };
 // @lc code=end
-

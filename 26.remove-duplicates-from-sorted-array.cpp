@@ -10,10 +10,10 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-  int removeDuplicates(vector<int>& nums) {
+  int removeDuplicates(vector<int> &nums) {
     int i = 0;
-    for(int n: nums) {
-      if(!i || n > nums[i - 1]) {
+    for (int n : nums) {
+      if (!i || n > nums[i - 1]) {
         nums[i++] = n;
       }
     }
@@ -21,4 +21,3 @@ public:
   }
 };
 // @lc code=end
-

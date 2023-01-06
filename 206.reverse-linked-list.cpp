@@ -25,13 +25,14 @@ struct ListNode {
  */
 class Solution {
 public:
-  ListNode* reverseList(ListNode* head) {
-    if(head == nullptr) return head;
-    ListNode* prev = nullptr;
-    ListNode* next = head;
+  ListNode *reverseList(ListNode *head) {
+    if (head == nullptr)
+      return head;
+    ListNode *prev = nullptr;
+    ListNode *next = head;
 
-    while(next != nullptr) {
-      ListNode* temp = next->next;
+    while (next != nullptr) {
+      ListNode *temp = next->next;
       next->next = prev;
       prev = next;
       next = temp;
@@ -41,4 +42,3 @@ public:
   }
 };
 // @lc code=end
-

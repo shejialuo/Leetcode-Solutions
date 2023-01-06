@@ -13,7 +13,8 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 // @lc code=start
@@ -25,15 +26,15 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-
-  void dfs(TreeNode* node, int depth, vector<int>& ans) {
-    if(node != nullptr) {
-      if(depth < ans.size()) {
+  void dfs(TreeNode *node, int depth, vector<int> &ans) {
+    if (node != nullptr) {
+      if (depth < ans.size()) {
         ans[depth] = node->val;
       } else {
         ans.emplace_back(node->val);
@@ -43,11 +44,10 @@ public:
     }
   }
 
-  vector<int> rightSideView(TreeNode* root) {
-    vector<int> ans {};
+  vector<int> rightSideView(TreeNode *root) {
+    vector<int> ans{};
     dfs(root, 0, ans);
     return ans;
   }
 };
 // @lc code=end
-
