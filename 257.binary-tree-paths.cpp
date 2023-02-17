@@ -4,6 +4,7 @@
  * [257] Binary Tree Paths
  */
 
+#include <array>
 #include <string>
 #include <vector>
 using namespace std;
@@ -33,27 +34,30 @@ struct TreeNode {
  */
 class Solution {
 public:
-  void dfs(TreeNode *node, vector<int> &path, vector<string> &ans) {
+  void dfs(TreeNode *node, array<int, 100> &path, vector<string> &ans,
+           int &num) {
     if (node != nullptr) {
-      path.push_back(node->val);
+      path[num] = node->val;
       if (node->left == nullptr && node->right == nullptr) {
         string s{};
-        for (int i = 0; i < path.size() - 1; ++i) {
+        for (int i = 0; i < num; ++i) {
           s += to_string(path[i]) + "->";
         }
-        s += to_string(path[path.size() - 1]);
+        s += to_string(path[num]);
         ans.push_back(s);
       }
-      dfs(node->left, path, ans);
-      dfs(node->right, path, ans);
-      path.pop_back();
+      num++;
+      dfs(node->left, path, ans, num);
+      dfs(node->right, path, ans, num);
+      num--;
     }
   }
 
   vector<string> binaryTreePaths(TreeNode *root) {
-    vector<int> path{};
+    array<int, 100> path{};
     vector<string> ans{};
-    dfs(root, path, ans);
+    int num = 0;
+    dfs(root, path, ans, num);
     return ans;
   }
 };
