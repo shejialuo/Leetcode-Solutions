@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include <stack>
 using namespace std;
 
 struct TreeNode {
@@ -32,6 +33,25 @@ struct TreeNode {
  */
 class Solution {
 private:
+  void invertTreeIterative(TreeNode *node) {
+    TreeNode *ptr = node;
+
+    stack<TreeNode *> st{};
+
+    while (ptr != nullptr || !st.empty()) {
+      while (ptr != nullptr) {
+        swap(ptr->left, ptr->right);
+        st.push(ptr);
+        ptr = ptr->left;
+      }
+
+      if (!st.empty()) {
+        ptr = st.top()->right;
+        st.pop();
+      }
+    }
+  }
+
   void invertTreeHelper(TreeNode *node) {
     if (node != nullptr) {
       swap(node->left, node->right);
@@ -42,9 +62,10 @@ private:
 
 public:
   TreeNode *invertTree(TreeNode *root) {
-    TreeNode *ans = root;
-    invertTreeHelper(root);
-    return ans;
+    // Recursive
+    // invertTreeHelper(root);
+    invertTreeIterative(root);
+    return root;
   }
 };
 // @lc code=end
