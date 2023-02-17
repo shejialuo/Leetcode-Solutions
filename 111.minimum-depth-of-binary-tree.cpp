@@ -32,6 +32,12 @@ struct TreeNode {
  */
 class Solution {
 public:
+  /**
+   * @brief There is a strick in the code, when the node
+   * has only one children, we should not consider the
+   * depth is zero.
+   *
+   */
   int minDepth(TreeNode *root) {
     if (root != nullptr) {
       int L = minDepth(root->left);
