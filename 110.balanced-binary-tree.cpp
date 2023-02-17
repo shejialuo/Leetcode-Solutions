@@ -14,7 +14,8 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 // @lc code=start
@@ -26,28 +27,31 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 private:
-  bool ans = true;
-  int isBalancedHelper(TreeNode* node) {
-    if(node != nullptr) {
-      int leftDepth = isBalancedHelper(node->left) + 1;
-      int rightDepth = isBalancedHelper(node->right) + 1;
-      if (abs(leftDepth - rightDepth) > 1) {
-        ans = false;
+  /**
+   * @brief Here we should use the idea of the post order traversing.
+   *
+   */
+  int isBalancedHelper(TreeNode *node) {
+    if (node != nullptr) {
+      int leftDepth = isBalancedHelper(node->left);
+      int rightDepth = isBalancedHelper(node->right);
+
+      if (leftDepth == -1 || rightDepth == -1 ||
+          abs(leftDepth - rightDepth) > 1) {
+        return -1;
       }
-      return max(leftDepth, rightDepth);
+      return max(leftDepth, rightDepth) + 1;
     }
     return 0;
   }
+
 public:
-  bool isBalanced(TreeNode* root) {
-    isBalancedHelper(root);
-    return ans;
-  }
+  bool isBalanced(TreeNode *root) { return isBalancedHelper(root) >= 0; }
 };
 // @lc code=end
-
