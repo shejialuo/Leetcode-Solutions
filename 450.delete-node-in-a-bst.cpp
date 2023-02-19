@@ -4,8 +4,6 @@
  * [450] Delete Node in a BST
  */
 
-// TODO: refactor the code
-
 struct TreeNode {
   int val;
   TreeNode *left;
@@ -30,46 +28,50 @@ struct TreeNode {
  * };
  */
 class Solution {
+private:
+  void helper(TreeNode *parent, TreeNode *ptr, TreeNode *val) {
+    if (parent->left == ptr) {
+      parent->left = val;
+    } else {
+      parent->right = val;
+    }
+  }
+
 public:
   TreeNode *deleteNode(TreeNode *root, int key) {
     TreeNode *ptr = root;
 
+    // auxiliary node
     TreeNode *aux = new TreeNode{-1};
     aux->left = root;
     TreeNode *parent = aux;
 
+    // search the corresponding node
     while (ptr != nullptr) {
       if (ptr->val == key) {
         break;
-      } else if (ptr->val > key) {
-        parent = ptr;
-        ptr = ptr->left;
       } else {
         parent = ptr;
-        ptr = ptr->right;
+        if (ptr->val > key) {
+          ptr = ptr->left;
+        } else {
+          ptr = ptr->right;
+        }
       }
     }
 
     if (ptr != nullptr) {
+      // When there is no children for the ptr, we just delete the node
       if (ptr->left == nullptr && ptr->right == nullptr) {
-        if (parent->left == ptr) {
-          parent->left = nullptr;
-        } else {
-          parent->right = nullptr;
-        }
+        helper(parent, ptr, nullptr);
       } else if (ptr->left == nullptr) {
-        if (parent->left == ptr) {
-          parent->left = ptr->right;
-        } else {
-          parent->right = ptr->right;
-        }
+        // When the ptr->left is nullptr
+        helper(parent, ptr, ptr->right);
       } else if (ptr->right == nullptr) {
-        if (parent->left == ptr) {
-          parent->left = ptr->left;
-        } else {
-          parent->right = ptr->left;
-        }
+        // When the ptr->right is nullptr
+        helper(parent, ptr, ptr->left);
       } else {
+
         TreeNode *rightNode = ptr->right;
 
         TreeNode *minNode = rightNode;
@@ -79,11 +81,7 @@ public:
           minNode = minNode->left;
         }
 
-        if (parent->left == ptr) {
-          parent->left = minNode;
-        } else {
-          parent->right = minNode;
-        }
+        helper(parent, ptr, minNode);
 
         if (minNodeParent != nullptr) {
           minNodeParent->left = minNode->right;
@@ -93,8 +91,6 @@ public:
           minNode->left = ptr->left;
         }
       }
-      ptr->left = nullptr;
-      ptr->right = nullptr;
     }
 
     root = aux->left;
