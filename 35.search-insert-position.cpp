@@ -8,17 +8,17 @@
 using namespace std;
 
 /*
-  * Binary Search Application
-*/
+ * Binary Search Application
+ */
 
 // @lc code=start
 class Solution {
 public:
-  int searchInsert(vector<int>& nums, int target) {
+  int searchInsert(vector<int> &nums, int target) {
     int start = 0, end = nums.size(), mid = 0;
-    while(start < end) {
+    while (start < end) {
       mid = (start + end) / 2;
-      if(nums[mid] < target) {
+      if (nums[mid] < target) {
         start = mid + 1;
       } else {
         end = mid;
@@ -28,4 +28,3 @@ public:
   }
 };
 // @lc code=end
-
