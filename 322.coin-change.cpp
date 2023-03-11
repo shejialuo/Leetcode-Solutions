@@ -14,24 +14,20 @@ class Solution {
 public:
   int coinChange(vector<int> &coins, int amount) {
 
-    vector<int> dp(amount + 1, -1);
+    vector<int> dp(amount + 1, numeric_limits<int>::max());
     dp[0] = 0;
-
-    for (int i = 1; i <= amount; ++i) {
-      int minNum = numeric_limits<int>::max();
-      for (int j = 0; j < coins.size(); ++j) {
-        if (coins[j] > i) {
-          continue;
+    for (int i = 0; i < coins.size(); ++i) {
+      for (int j = coins[i]; j <= amount; ++j) {
+        // There is a way.
+        if (dp[j - coins[i]] != numeric_limits<int>::max()) {
+          dp[j] = min(dp[j], dp[j - coins[i]] + 1);
         }
-        if (dp[i - coins[j]] != -1)
-          minNum = min(dp[i - coins[j]], minNum);
-      }
-      if (minNum != numeric_limits<int>::max()) {
-        dp[i] = minNum + 1;
       }
     }
-
-    return dp[amount];
+    if (dp.back() == numeric_limits<int>::max()) {
+      return -1;
+    }
+    return dp.back();
   }
 };
 // @lc code=end
