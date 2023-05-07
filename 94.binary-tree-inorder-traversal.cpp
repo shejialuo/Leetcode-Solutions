@@ -36,7 +36,7 @@ public:
   vector<int> inorderTraversal(TreeNode *root) {
     stack<TreeNode *> st;
     vector<int> ans{};
-    while (root != nullptr | !st.empty()) {
+    while (root != nullptr || !st.empty()) {
       while (root != nullptr) {
         st.push(root);
         root = root->left;
