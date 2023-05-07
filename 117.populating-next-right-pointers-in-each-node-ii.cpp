@@ -40,47 +40,29 @@ class Solution {
 public:
   Node *connect(Node *root) {
     Node *ptr = root;
+    Node *dummy = new Node{};
     while (ptr != nullptr) {
-      Node *nextPtr = nullptr;
-      Node *level = ptr;
-      Node *pre = nullptr;
 
+      /**< we should maintain the last node we need to connect*/
+      Node *pre = dummy;
+      pre->next = nullptr;
+
+      Node *level = ptr;
       while (level != nullptr) {
         if (level->left != nullptr) {
+          pre->next = level->left;
+          pre = level->left;
+        }
+        if (level->right != nullptr) {
 
-          // Set the nextPtr
-          if (nextPtr == nullptr) {
-            nextPtr = level->left;
-          }
-
-          if (pre != nullptr) {
-            pre->next = level->left;
-          }
-
-          if (level->right != nullptr) {
-            // case 1: the left child and the right child exists
-            level->left->next = level->right;
-            pre = level->right;
-          } else {
-            // case 2: the left child exists but the right child do not exists
-            pre = level->left;
-          }
-        } else if (level->right != nullptr) {
-          // case3 : the left child do not exists but the right child exists
-          if (nextPtr == nullptr) {
-            nextPtr = level->right;
-          }
-
-          if (pre != nullptr) {
-            pre->next = level->right;
-          }
+          pre->next = level->right;
           pre = level->right;
         }
         level = level->next;
       }
-
-      ptr = nextPtr;
+      ptr = dummy->next;
     }
+    delete dummy;
     return root;
   }
 };
