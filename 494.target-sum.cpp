@@ -4,8 +4,6 @@
  * [494] Target Sum
  */
 
-// TODO: Add dynamic programming solution
-
 #include <cmath>
 #include <numeric>
 #include <vector>
