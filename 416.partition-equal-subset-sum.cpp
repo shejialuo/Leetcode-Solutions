@@ -11,6 +11,13 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
+  /**
+   * @brief We should convert this problem to 0/1 packing problem
+   * The problem is let us to split the array. So we have two sets
+   * A and B. And the choice is to put it in the A or put it in the B.
+   * And the target is the sum(array) / 2.
+   *
+   */
   bool canPartition(vector<int> &nums) {
     int sum = accumulate(nums.cbegin(), nums.cend(), 0);
     if (sum % 2 != 0) {
