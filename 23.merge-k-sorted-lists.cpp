@@ -4,6 +4,7 @@
  * [23] Merge k Sorted Lists
  */
 
+#include <queue>
 struct ListNode {
   int val;
   ListNode *next;
@@ -78,13 +79,50 @@ private:
     }
   }
 
+  ListNode *heapMergeKLists(vector<ListNode *> &lists) {
+    if (lists.empty()) {
+      return nullptr;
+    }
+
+    struct comp {
+      bool operator()(ListNode *l1, ListNode *l2) { return l1->val > l2->val; }
+    };
+
+    priority_queue<ListNode *, vector<ListNode *>, comp> heap{};
+
+    for (auto &&node : lists) {
+      if (node != nullptr) {
+        heap.push(node);
+      }
+    }
+    ListNode *aux = new ListNode{};
+    ListNode *ptr = aux;
+
+    while (!heap.empty()) {
+      ListNode *node = heap.top();
+      heap.pop();
+      ptr->next = node;
+      ptr = ptr->next;
+      if (node->next != nullptr) {
+        heap.push(node->next);
+      }
+    }
+
+    ListNode *ans = aux->next;
+    delete aux;
+    return ans;
+  }
+
 public:
   ListNode *mergeKLists(vector<ListNode *> &lists) {
     // Brute Force
     // return mergeKListsBruteForce(lists);
 
     // Divide and conquer
-    return mergeKListsDivideAndConquer(lists, 0, lists.size() - 1);
+    // return mergeKListsDivideAndConquer(lists, 0, lists.size() - 1);
+
+    // Heap
+    return heapMergeKLists(lists);
   }
 };
 // @lc code=end
