@@ -30,46 +30,51 @@ class Solution {
 private:
   /**
    * @brief For example, start->1->2->3->end, we should convert it
-   * to the start->3->2-1->end. And returns the 1. And we could
-   * solve it easily.
+   * to the start->3->2->1->end. And returns the 1 for the next
+   * iteration. It'easy we convert 1->2->3 to 3->2->1. Then the node
+   * will be 3->2->1 , start->1, end. So we would let start->3,
+   * 1->end.
    *
    */
   ListNode *reverseKGroupHelper(ListNode *start, ListNode *end) {
 
-    ListNode *current = start->next;
-    ListNode *ptr = current;
-    ListNode *next = current->next;
+    ListNode *pre = start->next;
+    ListNode *next = pre->next;
 
     while (next != end) {
       ListNode *temp = next->next;
-      next->next = current;
-      current = next;
+      next->next = pre;
+      pre = next;
       next = temp;
     }
 
-    start->next = current;
-    ptr->next = end;
+    ListNode *first = start->next;
+    start->next = pre;
+    first->next = end;
 
-    return ptr;
+    return first;
   }
 
 public:
   ListNode *reverseKGroup(ListNode *head, int k) {
     ListNode *aux = new ListNode(-1, head);
-    ListNode *start = aux;
-    ListNode *end = start->next;
-    while (end != nullptr) {
+
+    ListNode *ptr = aux;
+    while (aux != nullptr) {
+      ListNode *start = ptr, *end = ptr;
       int i = 0;
-      for (; i < k && end != nullptr; ++i) {
+      for (; i < k + 1 && end != nullptr; ++i) {
         end = end->next;
       }
-      if (end == nullptr && i != k) {
+      if (end == nullptr && i != k + 1) {
         break;
       }
-      start = reverseKGroupHelper(start, end);
-      end = start->next;
+      ptr = reverseKGroupHelper(start, end);
     }
-    return aux->next;
+
+    ListNode *ans = aux->next;
+    delete aux;
+    return ans;
   }
 };
 // @lc code=end
