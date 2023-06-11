@@ -25,29 +25,42 @@ struct ListNode {
  */
 class Solution {
 public:
-  ListNode* rotateRight(ListNode* head, int k) {
-    if(head == nullptr) {
+  ListNode *rotateRight(ListNode *head, int k) {
+
+    // Corner case
+    if (head == nullptr || k == 0) {
       return head;
     }
-    ListNode* p1 = head;
-    ListNode* p2;
+
     int length = 0;
-    while(p1 != nullptr) {
+    for (ListNode *ptr = head; ptr != nullptr; ptr = ptr->next) {
       length++;
-      p2 = p1;
-      p1 = p1 -> next;
     }
-    p2->next = head;
-    p1 = head;
-    int offset = length - (k % length);
-    if(offset == 0) return head;
-    for(int i = 0; i < offset - 1; ++i) {
-      p1 = p1 ->next;
+
+    // Do Nothing
+    int num = length - k % length;
+    if (num % length == 0) {
+      return head;
     }
-    ListNode* result = p1 -> next;
-    p1 -> next = nullptr;
-    return result;
+
+    ListNode *newHead = head;
+    ListNode *ptr = nullptr;
+
+    for (int i = 0; i < num; i++) {
+      ptr = newHead;
+      newHead = newHead->next;
+    }
+
+    ptr->next = nullptr;
+
+    ptr = newHead;
+    while (ptr->next != nullptr) {
+      ptr = ptr->next;
+    }
+
+    ptr->next = head;
+
+    return newHead;
   }
 };
 // @lc code=end
-
