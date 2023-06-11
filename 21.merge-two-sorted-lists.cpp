@@ -4,6 +4,9 @@
  * [21] Merge Two Sorted Lists
  */
 
+#include <memory>
+using namespace std;
+
 struct ListNode {
   int val;
   ListNode *next;
@@ -31,8 +34,8 @@ struct ListNode {
 class Solution {
 public:
   ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
-    ListNode *aux = new ListNode(-1);
-    ListNode *p = aux;
+    auto aux = make_unique<ListNode>(-1);
+    ListNode *p = aux.get();
     while (list1 != nullptr && list2 != nullptr) {
       if (list1->val < list2->val) {
         p->next = list1;
@@ -45,9 +48,7 @@ public:
     }
     p->next = list1 == nullptr ? list2 : list1;
 
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+    return aux->next;
   }
 };
 // @lc code=end

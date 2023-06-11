@@ -13,6 +13,7 @@ struct ListNode {
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+#include <memory>
 #include <vector>
 using namespace std;
 
@@ -30,8 +31,8 @@ using namespace std;
 class Solution {
 private:
   ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
-    ListNode *aux = new ListNode(-1);
-    ListNode *p = aux;
+    auto aux = make_unique<ListNode>(-1);
+    ListNode *p = aux.get();
     while (list1 != nullptr && list2 != nullptr) {
       if (list1->val < list2->val) {
         p->next = list1;
@@ -44,9 +45,7 @@ private:
     }
     p->next = list1 == nullptr ? list2 : list1;
 
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+    return aux->next;
   }
 
   // The most easiest way: brute force to solve this problem
@@ -95,8 +94,8 @@ private:
         heap.push(node);
       }
     }
-    ListNode *aux = new ListNode{};
-    ListNode *ptr = aux;
+    auto aux = make_unique<ListNode>(-1);
+    ListNode *ptr = aux.get();
 
     while (!heap.empty()) {
       ListNode *node = heap.top();
@@ -108,9 +107,7 @@ private:
       }
     }
 
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+    return aux->next;
   }
 
 public:

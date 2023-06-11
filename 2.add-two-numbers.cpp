@@ -4,6 +4,9 @@
  * [2] Add Two Numbers
  */
 
+#include <memory>
+using namespace std;
+
 struct ListNode {
   int val;
   ListNode *next;
@@ -32,8 +35,8 @@ struct ListNode {
 class Solution {
 public:
   ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-    ListNode *ans = new ListNode();
-    ListNode *rear = ans;
+    auto ans = make_unique<ListNode>(-1);
+    ListNode *rear = ans.get();
     ListNode *p1 = l1;
     ListNode *p2 = l2;
 

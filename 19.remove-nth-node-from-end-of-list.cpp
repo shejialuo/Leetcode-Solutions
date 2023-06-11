@@ -4,6 +4,9 @@
  * [19] Remove Nth Node From End of List
  */
 
+#include <memory>
+using namespace std;
+
 struct ListNode {
   int val;
   ListNode *next;
@@ -34,9 +37,9 @@ struct ListNode {
 class Solution {
 public:
   ListNode *removeNthFromEnd(ListNode *head, int n) {
-    ListNode *aux = new ListNode(0, head);
-    ListNode *slow = aux;
-    ListNode *fast = aux;
+    auto aux = make_unique<ListNode>(0, head);
+    ListNode *slow = aux.get();
+    ListNode *fast = aux.get();
     for (int i = 0; i < n; i++) {
       fast = fast->next;
     }
@@ -45,9 +48,7 @@ public:
       fast = fast->next;
     }
     slow->next = slow->next->next;
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+    return aux->next;
   }
 };
 // @lc code=end

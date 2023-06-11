@@ -4,6 +4,9 @@
  * [82] Remove Duplicates from Sorted List II
  */
 
+#include <memory>
+using namespace std;
+
 struct ListNode {
   int val;
   ListNode *next;
@@ -26,25 +29,24 @@ struct ListNode {
 class Solution {
 public:
   ListNode *deleteDuplicates(ListNode *head) {
-    ListNode *aux = new ListNode(0, head);
-    ListNode *ptr = aux;
-    while (ptr->next != nullptr) {
-      ListNode *start = ptr->next;
-      bool isSame = false;
-      while (start != nullptr && start->next != nullptr) {
-        if (start->val == start->next->val) {
-          isSame = true;
-          start->next = start->next->next;
-        } else {
-          break;
-        }
+    unique_ptr<ListNode> aux = make_unique<ListNode>(-101, head);
+
+    ListNode *ptr = aux.get();
+
+    while (ptr != nullptr && ptr->next != nullptr) {
+      ListNode *first = ptr->next;
+
+      while (first->next != nullptr && first->next->val == first->val) {
+        first = first->next;
       }
-      if (isSame) {
-        ptr->next = start->next;
+
+      if (ptr->next == first) {
+        ptr = first;
       } else {
-        ptr = ptr->next;
+        ptr->next = first->next;
       }
     }
+
     return aux->next;
   }
 };
