@@ -4,6 +4,9 @@
  * [86] Partition List
  */
 
+#include <memory>
+using namespace std;
+
 struct ListNode {
   int val;
   ListNode *next;
@@ -26,32 +29,26 @@ struct ListNode {
 class Solution {
 public:
   ListNode *partition(ListNode *head, int x) {
-    ListNode *lessHead = new ListNode{-1};
-    ListNode *ptrLess = lessHead;
+    auto less = make_unique<ListNode>();
+    auto greater = make_unique<ListNode>();
 
-    ListNode *greaterHead = new ListNode{-1};
-    ListNode *ptrGreater = greaterHead;
+    ListNode *lessPtr = less.get();
+    ListNode *greaterPtr = greater.get();
 
-    ListNode *ptr = head;
-    while (ptr != nullptr) {
+    for (ListNode *ptr = head; ptr != nullptr; ptr = ptr->next) {
       if (ptr->val < x) {
-        ptrLess->next = ptr;
-        ptrLess = ptr;
+        lessPtr->next = ptr;
+        lessPtr = ptr;
       } else {
-        ptrGreater->next = ptr;
-        ptrGreater = ptr;
+        greaterPtr->next = ptr;
+        greaterPtr = ptr;
       }
-      ptr = ptr->next;
     }
 
-    ptrLess->next = greaterHead->next;
-    ptrGreater->next = nullptr;
+    lessPtr->next = greater->next;
+    greaterPtr->next = nullptr;
 
-    ListNode *ans = lessHead->next;
-    delete lessHead;
-    delete greaterHead;
-
-    return ans;
+    return less->next;
   }
 };
 // @lc code=end
