@@ -4,6 +4,9 @@
  * [92] Reverse Linked List II
  */
 
+#include <memory>
+using namespace std;
+
 struct ListNode {
   int val;
   ListNode *next;
@@ -25,28 +28,37 @@ struct ListNode {
  */
 class Solution {
 public:
+  /**
+   * @brief We need to find the pointer here where
+   * leftStart left .. right .. rightEnd
+   *
+   */
   ListNode *reverseBetween(ListNode *head, int left, int right) {
-    if (left == right)
+    if (left == right) {
       return head;
-    ListNode *aux = new ListNode(0, head);
-    ListNode *prevLeftNode = aux;
-    for (int i = 0; i < left - 1; ++i) {
-      prevLeftNode = prevLeftNode->next;
     }
-    ListNode *prev = prevLeftNode->next;
-    ListNode *p = prev->next;
-    for (int i = 0; i < right - left; ++i) {
-      ListNode *temp = p->next;
-      p->next = prev;
-      prev = p;
-      p = temp;
+
+    auto aux = make_unique<ListNode>(-1, head);
+    ListNode *leftStart = aux.get();
+
+    for (int i = 0; i < left - 1; i++) {
+      leftStart = leftStart->next;
     }
-    ListNode *temp = prevLeftNode->next;
-    prevLeftNode->next = prev;
-    temp->next = p;
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+
+    ListNode *pre = leftStart->next;
+    ListNode *next = pre->next;
+    for (int i = 0; i < right - left; i++) {
+      ListNode *temp = next->next;
+      next->next = pre;
+      pre = next;
+      next = temp;
+    }
+
+    ListNode *temp = leftStart->next;
+    leftStart->next = pre;
+    temp->next = next;
+
+    return aux->next;
   }
 };
 // @lc code=end

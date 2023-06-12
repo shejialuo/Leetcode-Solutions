@@ -26,8 +26,7 @@ public:
     }
 
     int value = pos->second->second;
-    items.erase(pos->second);
-    items.push_front(make_pair(key, value));
+    items.splice(items.begin(), items, pos->second);
     keyToIterators[key] = items.begin();
 
     return value;
@@ -43,8 +42,8 @@ public:
         items.pop_back();
       }
     } else {
-      items.erase(pos->second);
-      items.push_front(std::make_pair(key, value));
+      items.splice(items.begin(), items, pos->second);
+      items.front().second = value;
       keyToIterators[key] = items.begin();
     }
   }

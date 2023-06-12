@@ -4,6 +4,9 @@
  * [117] Populating Next Right Pointers in Each Node II
  */
 
+#include <memory>
+using namespace std;
+
 class Node {
 public:
   int val;
@@ -40,11 +43,11 @@ class Solution {
 public:
   Node *connect(Node *root) {
     Node *ptr = root;
-    Node *dummy = new Node{};
+    auto dummy = make_unique<Node>();
     while (ptr != nullptr) {
 
       /**< we should maintain the last node we need to connect*/
-      Node *pre = dummy;
+      Node *pre = dummy.get();
       pre->next = nullptr;
 
       Node *level = ptr;
@@ -62,7 +65,6 @@ public:
       }
       ptr = dummy->next;
     }
-    delete dummy;
     return root;
   }
 };

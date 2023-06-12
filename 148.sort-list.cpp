@@ -56,13 +56,12 @@ private:
 public:
   /**
    * @brief For this problem, the most easy implementation would be divide and
-   * way. We could divide the two list into two, two ,and two. At last we could
-   * merge it as two sorted listed. (Merge sort)
+   * conquer way. We could divide the two list into two, two ,and two. At last
+   * we could merge it as two sorted listed. (Merge sort)
    *
    * However, the up-to-bottom would cost memory. We could think it bottom to
    * up. Well, we could set up the subLength to 1. And to be 2. We would
    * get two list with the same length, thus we could achieve this.
-   *
    *
    */
   ListNode *sortList(ListNode *head) {
@@ -82,8 +81,8 @@ public:
 
     // o->o->o->o->o->o->o->o, we assume the subLength is 2.
     // we should break the list to become o->o->nullptr, o->o->nullptr.
-    // o->o->o->o->o. When we merge, we get a new o->o->o->o, which
-    // will return the head nad the tail. The first head would be the
+    // o->o->o->o. When we merge, we get a new o->o->o->o, which
+    // will return the head and the tail. The first head would be the
     // next pointer, the tail would concatenate the next. It's hard
     // do remember maintain the loop invariant.
 

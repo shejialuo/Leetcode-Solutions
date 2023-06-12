@@ -5,6 +5,7 @@
  */
 
 #include <limits>
+#include <memory>
 using namespace std;
 
 struct ListNode {
@@ -29,12 +30,12 @@ struct ListNode {
 class Solution {
 public:
   ListNode *insertionSortList(ListNode *head) {
-    ListNode *aux = new ListNode{numeric_limits<int>::min()};
+    auto aux = make_unique<ListNode>(numeric_limits<int>::min());
 
     ListNode *ptr = head;
     while (ptr != nullptr) {
       ListNode *next = ptr->next;
-      ListNode *p = aux, *pre = nullptr;
+      ListNode *p = aux.get(), *pre = nullptr;
       for (; p != nullptr; p = p->next) {
         if (p->val > ptr->val) {
           break;
@@ -45,10 +46,8 @@ public:
       ptr->next = p;
 
       ptr = next;
-    }
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+    };
+    return aux->next;
   }
 };
 // @lc code=end
