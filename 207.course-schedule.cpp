@@ -5,6 +5,7 @@
  */
 
 #include <list>
+#include <queue>
 #include <vector>
 using namespace std;
 
@@ -37,6 +38,31 @@ private:
     courses.push_front(current);
   }
 
+  bool canFinishBFS(vector<int> &indegree, vector<vector<int>> &graph) {
+    queue<int> qu{};
+
+    for (int i = 0; i < indegree.size(); i++) {
+      if (indegree[i] == 0) {
+        qu.push(i);
+      }
+    }
+
+    int visited = 0;
+    while (!qu.empty()) {
+      visited++;
+      int current = qu.front();
+      qu.pop();
+
+      for (auto next : graph[current]) {
+        --indegree[next];
+        if (indegree[next] == 0) {
+          qu.push(next);
+        }
+      }
+    }
+    return visited == indegree.size();
+  }
+
 public:
   /**
    * @brief It's important to understand when we can finish all the courses,
@@ -56,10 +82,12 @@ public:
     vector<State> states(numCourses, State::NotVisited);
     list<int> courses{};
 
+    vector<int> indegree(numCourses, 0);
     vector<vector<int>> graph(numCourses, vector<int>{});
 
     for (auto &&prerequisite : prerequisites) {
       graph[prerequisite[1]].push_back(prerequisite[0]);
+      indegree[prerequisite[0]]++;
     }
 
     for (int i = 0; i < numCourses; i++) {
@@ -69,6 +97,9 @@ public:
     }
 
     return !hasLoop && courses.size() == numCourses;
+
+    // BFS
+    // return canFinishBFS(indegree, graph);
   }
 };
 // @lc code=end
