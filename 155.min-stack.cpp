@@ -4,86 +4,39 @@
  * [155] Min Stack
  */
 
-#include <limits>
+#include <stack>
+using namespace std;
 
 // @lc code=start
+/**
+ * @brief Use two stack to monitor
+ *
+ */
 class MinStack {
 private:
-  int size;
-  int *item;
-  int capacity;
-  int minNumber;
-
-  bool isEmpty() {
-    return size == 0;
-  }
-
-  bool isFull() {
-    return size == capacity;
-  }
-
-  void resize() {
-    int *newItem = new int[capacity * 2];
-    for(int i = 0; i < capacity; ++i) {
-      newItem[i] = item[i];
-    }
-    capacity = capacity * 2;
-    delete[] item;
-    item = newItem;
-  }
-
-  void findMin() {
-    int min = std::numeric_limits<int>::max();
-    for(int i = 0; i < size; ++i) {
-      if(item[i] < min) {
-        min = item[i];
-      }
-    }
-    minNumber = min;
-  }
+  stack<int> st{};
+  stack<int> min{};
 
 public:
-  MinStack() {
-    capacity = 100;
-    item = new int[capacity];
-    size = 0;
-    minNumber = std::numeric_limits<int>::max();
-  }
+  MinStack() {}
 
   void push(int val) {
-    if(isFull()) {
-      resize();
-    }
-    item[size] = val;
-    size++;
-    if(val < minNumber) {
-      minNumber = val;
+    st.push(val);
+    if (min.empty() || val <= getMin()) {
+      min.push(val);
     }
   }
 
   void pop() {
-    if(!isEmpty()) {
-      int topNum = top();
-      size--;
-      if(topNum == minNumber) {
-        findMin();
-      }
+    if (st.top() == getMin()) {
+      min.pop();
     }
+    st.pop();
   }
 
-  int top() {
-    if(isEmpty()) {
-      return -1;
-    }
-    return item[size - 1];
-  }
+  int top() { return st.top(); }
 
-  int getMin() {
-    if (isEmpty()) {
-      return -1;
-    }
-    return minNumber;
-  }
+  int getMin() { return min.top(); }
 };
 
 /**
@@ -95,4 +48,3 @@ public:
  * int param_4 = obj->getMin();
  */
 // @lc code=end
-
