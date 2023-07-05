@@ -9,8 +9,6 @@
 #include <unordered_map>
 using namespace std;
 
-// TODO : efficiency
-
 // @lc code=start
 class WordDictionary {
 private:
@@ -47,11 +45,12 @@ private:
   bool searchHelper(unique_ptr<Node> *ptr, int index, const string &word) {
     for (int i = index; i < word.size(); i++) {
       if (word[i] == '.') {
-        bool ans = false;
         for (auto &&childInfo : (*ptr)->getChildren()) {
-          ans |= searchHelper(&childInfo.second, i + 1, word);
+          if (searchHelper(&childInfo.second, i + 1, word)) {
+            return true;
+          }
         }
-        return ans;
+        return false;
       } else {
         ptr = (*ptr)->nextChild(word[i]);
         if (ptr == nullptr) {
@@ -65,7 +64,7 @@ private:
 public:
   WordDictionary() { root = make_unique<Node>('a'); }
 
-  void addWord(string word) {
+  void addWord(const string &word) {
     unique_ptr<Node> *ptr = &root;
     for (char c : word) {
       unique_ptr<Node> *child = (*ptr)->nextChild(c);
@@ -78,7 +77,7 @@ public:
     (*ptr)->setEnd();
   }
 
-  bool search(string word) { return searchHelper(&root, 0, word); }
+  bool search(const string &word) { return searchHelper(&root, 0, word); }
 };
 
 /**
