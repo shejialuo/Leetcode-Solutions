@@ -7,13 +7,10 @@
 #include <string>
 using namespace std;
 
-// TODO: now the solution uses burte-force, need to refactor
-
 // @lc code=start
 class Solution {
 private:
-  bool validPalindromeHelper(string &s) {
-    int i = 0, j = s.size() - 1;
+  bool validPalindromeHelper(string &s, int i, int j) {
     while (i < j) {
       if (s[i] != s[j]) {
         return false;
@@ -26,13 +23,16 @@ private:
 
 public:
   bool validPalindrome(string s) {
-    bool ans = validPalindromeHelper(s);
-    for (int i = 0; i < s.size(); ++i) {
-      string s_ = s;
-      s_.erase(i, 1);
-      ans = ans || validPalindromeHelper(s_);
+    int i = 0, j = s.size() - 1;
+    while (i < j) {
+      if (s[i] != s[j]) {
+        return validPalindromeHelper(s, i + 1, j) ||
+               validPalindromeHelper(s, i, j - 1);
+      }
+      i++;
+      j--;
     }
-    return ans;
+    return true;
   }
 };
 // @lc code=end
