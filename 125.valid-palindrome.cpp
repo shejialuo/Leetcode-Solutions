@@ -4,27 +4,31 @@
  * [125] Valid Palindrome
  */
 
-#include <string>
 #include <cctype>
+#include <string>
 using namespace std;
 
 // @lc code=start
 class Solution {
 public:
   bool isPalindrome(string s) {
-    int i = 0, j = s.size() - 1;
-    while(i < j) {
-      while(i < j && !isalnum(s[j])) j--;
-      while(i < j && !isalnum(s[i])) i++;
-      if(i < j) {
-        if(tolower(s[i]) != tolower(s[j])) {
+    int start = 0, end = s.size() - 1;
+    while (start < end) {
+      while (start < end && !isalnum(s[start])) {
+        start++;
+      }
+      while (start < end && !isalnum(s[end])) {
+        end--;
+      }
+      if (start < end) {
+        if (tolower(s[start]) != tolower(s[end])) {
           return false;
         }
       }
-      i++; j--;
+      start++;
+      end--;
     }
     return true;
   }
 };
 // @lc code=end
-
