@@ -60,6 +60,7 @@ private:
   unordered_map<int, list<Info>::iterator> keysToIterators{};
 
   int size;
+  int minFrequency{1};
 
 public:
   LFUCache(int capacity) : size{capacity} { infos.resize(1); }
@@ -78,6 +79,9 @@ public:
 
     infos[count - 1].splice(infos[count - 1].begin(), infos[count - 2],
                             iter->second);
+    if (infos[count - 2].empty() && minFrequency == count - 1) {
+      minFrequency++;
+    }
 
     keysToIterators[key] = infos[count - 1].begin();
 
@@ -91,17 +95,14 @@ public:
         infos[0].push_front(Info{key, value});
         keysToIterators[key] = infos[0].begin();
       } else {
-        int index = 0;
-        while (infos[index].empty()) {
-          index++;
-        }
 
-        keysToIterators.erase(infos[index].back().getKey());
-        infos[index].pop_back();
+        keysToIterators.erase(infos[minFrequency - 1].back().getKey());
+        infos[minFrequency - 1].pop_back();
 
         infos[0].push_front(Info{key, value});
         keysToIterators[key] = infos[0].begin();
       }
+      minFrequency = 1;
     } else {
       iter->second->setValue(value);
       int count = iter->second->plusCounter();
@@ -113,6 +114,10 @@ public:
                               iter->second);
 
       keysToIterators[key] = infos[count - 1].begin();
+
+      if (infos[count - 2].empty() && minFrequency == count - 1) {
+        minFrequency++;
+      }
     }
   }
 };

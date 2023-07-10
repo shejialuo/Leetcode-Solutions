@@ -39,24 +39,28 @@ public:
     }
 
     auto aux = make_unique<ListNode>(-1, head);
-    ListNode *leftStart = aux.get();
+    ListNode *start = aux.get();
 
     for (int i = 0; i < left - 1; i++) {
-      leftStart = leftStart->next;
+      start = start->next;
     }
 
-    ListNode *pre = leftStart->next;
-    ListNode *next = pre->next;
-    for (int i = 0; i < right - left; i++) {
-      ListNode *temp = next->next;
-      next->next = pre;
-      pre = next;
-      next = temp;
+    ListNode *end = start;
+    for (int i = 0; i < right - left + 2; i++) {
+      end = end->next;
     }
 
-    ListNode *temp = leftStart->next;
-    leftStart->next = pre;
-    temp->next = next;
+    ListNode *pre = start->next;
+    ListNode *cur = pre->next;
+    while (cur != end) {
+      ListNode *next = cur->next;
+      cur->next = pre;
+      pre = cur;
+      cur = next;
+    }
+
+    start->next->next = end;
+    start->next = pre;
 
     return aux->next;
   }

@@ -43,7 +43,9 @@ private:
       }
     }
 
-    pre->next = nullptr;
+    if (pre != nullptr) {
+      pre->next = nullptr;
+    }
 
     if (length % 2 != 0) {
       return slow->next;

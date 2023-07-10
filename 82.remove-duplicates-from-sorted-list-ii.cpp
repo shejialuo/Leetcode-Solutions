@@ -33,17 +33,17 @@ public:
 
     ListNode *ptr = aux.get();
 
-    while (ptr != nullptr && ptr->next != nullptr) {
-      ListNode *first = ptr->next;
-
-      while (first->next != nullptr && first->next->val == first->val) {
-        first = first->next;
+    while (ptr != nullptr) {
+      ListNode *next = ptr->next;
+      while (next != nullptr && next->next != nullptr &&
+             next->next->val == next->val) {
+        next = next->next;
       }
 
-      if (ptr->next == first) {
-        ptr = first;
+      if (ptr->next != next) {
+        ptr->next = next->next;
       } else {
-        ptr->next = first->next;
+        ptr = ptr->next;
       }
     }
 

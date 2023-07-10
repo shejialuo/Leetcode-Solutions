@@ -32,21 +32,25 @@ public:
   ListNode *insertionSortList(ListNode *head) {
     auto aux = make_unique<ListNode>(numeric_limits<int>::min());
 
-    ListNode *ptr = head;
-    while (ptr != nullptr) {
-      ListNode *next = ptr->next;
-      ListNode *p = aux.get(), *pre = nullptr;
-      for (; p != nullptr; p = p->next) {
-        if (p->val > ptr->val) {
+    ListNode *cur = head;
+    while (cur != nullptr) {
+      ListNode *next = cur->next;
+
+      ListNode *pre = nullptr;
+      ListNode *ptr = aux.get();
+      while (ptr != nullptr) {
+        if (ptr->val >= cur->val) {
           break;
         }
-        pre = p;
+        pre = ptr;
+        ptr = ptr->next;
       }
-      pre->next = ptr;
-      ptr->next = p;
 
-      ptr = next;
-    };
+      pre->next = cur;
+      cur->next = ptr;
+
+      cur = next;
+    }
     return aux->next;
   }
 };

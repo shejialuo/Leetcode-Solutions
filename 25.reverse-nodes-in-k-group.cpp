@@ -4,6 +4,7 @@
  * [25] Reverse Nodes in k-Group
  */
 
+#include <memory>
 #include <utility>
 using namespace std;
 
@@ -37,44 +38,42 @@ private:
    *
    */
   ListNode *reverseKGroupHelper(ListNode *start, ListNode *end) {
+    ListNode *nextStart = start->next;
 
     ListNode *pre = start->next;
-    ListNode *next = pre->next;
-
-    while (next != end) {
-      ListNode *temp = next->next;
-      next->next = pre;
-      pre = next;
-      next = temp;
+    ListNode *cur = pre->next;
+    while (cur != end) {
+      ListNode *next = cur->next;
+      cur->next = pre;
+      pre = cur;
+      cur = next;
     }
 
-    ListNode *first = start->next;
+    start->next->next = end;
     start->next = pre;
-    first->next = end;
 
-    return first;
+    return nextStart;
   }
 
 public:
   ListNode *reverseKGroup(ListNode *head, int k) {
-    ListNode *aux = new ListNode(-1, head);
+    auto aux = make_unique<ListNode>(-1, head);
+    ListNode *ptr = aux.get();
 
-    ListNode *ptr = aux;
-    while (aux != nullptr) {
-      ListNode *start = ptr, *end = ptr;
-      int i = 0;
-      for (; i < k + 1 && end != nullptr; ++i) {
+    while (ptr != nullptr) {
+      int length = 0;
+      ListNode *end = ptr;
+      for (; length < k + 1 && end != nullptr; length++) {
         end = end->next;
       }
-      if (end == nullptr && i != k + 1) {
+
+      if (end == nullptr && length < k + 1) {
         break;
       }
-      ptr = reverseKGroupHelper(start, end);
-    }
 
-    ListNode *ans = aux->next;
-    delete aux;
-    return ans;
+      ptr = reverseKGroupHelper(ptr, end);
+    }
+    return aux->next;
   }
 };
 // @lc code=end

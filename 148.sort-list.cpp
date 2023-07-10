@@ -4,6 +4,7 @@
  * [148] Sort List
  */
 
+#include <memory>
 #include <utility>
 using namespace std;
 
@@ -29,8 +30,8 @@ struct ListNode {
 class Solution {
 private:
   pair<ListNode *, ListNode *> mergeTwoSortedList(ListNode *l1, ListNode *l2) {
-    ListNode *aux = new ListNode{-1};
-    ListNode *ptr = aux;
+    auto aux = make_unique<ListNode>(-1);
+    ListNode *ptr = aux.get();
     while (l1 != nullptr && l2 != nullptr) {
       if (l1->val < l2->val) {
         ptr->next = l1;
@@ -48,9 +49,7 @@ private:
       ptr = ptr->next;
     }
 
-    ListNode *head = aux->next;
-    delete aux;
-    return make_pair(head, ptr);
+    return make_pair(aux->next, ptr);
   }
 
 public:
@@ -69,70 +68,43 @@ public:
       return nullptr;
     }
 
+    auto aux = make_unique<ListNode>(-1, head);
+
     int length = 0;
     for (ListNode *ptr = head; ptr != nullptr; ptr = ptr->next) {
       length++;
     }
 
-    ListNode *ptr = head;
-
-    // It is hard to write this function correctly, we should also
-    // keep the loop invariant.
-
-    // o->o->o->o->o->o->o->o, we assume the subLength is 2.
-    // we should break the list to become o->o->nullptr, o->o->nullptr.
-    // o->o->o->o. When we merge, we get a new o->o->o->o, which
-    // will return the head and the tail. The first head would be the
-    // next pointer, the tail would concatenate the next. It's hard
-    // do remember maintain the loop invariant.
-
     for (int subLength = 1; subLength < length; subLength *= 2) {
-      ListNode *l1 = nullptr;
-      ListNode *l2 = nullptr;
+      ListNode *end = aux.get();
+      ListNode *ptr = end->next;
 
-      ListNode *p = ptr;
-      ListNode *pre = nullptr;
-      ListNode *nextPtr = nullptr;
-      ListNode *lastMergedListEnd = nullptr;
+      while (ptr != nullptr) {
+        ListNode *pre = nullptr;
+        ListNode *l1 = ptr;
 
-      while (p != nullptr) {
-
-        // Get the list1
-        l1 = p;
-        for (int i = 0; i < subLength && p != nullptr; i++) {
-          pre = p;
-          p = p->next;
-        }
-
-        // break the list1
-        pre->next = nullptr;
-
-        // There may be situation that p is nullptr at now,
-        // however does not matter at all.
-        l2 = p;
-        for (int i = 0; i < subLength && p != nullptr; i++) {
-          pre = p;
-          p = p->next;
+        for (int i = 0; i < subLength && ptr != nullptr; i++) {
+          pre = ptr;
+          ptr = ptr->next;
         }
 
         pre->next = nullptr;
 
-        auto [head, tail] = mergeTwoSortedList(l1, l2);
-        if (lastMergedListEnd != nullptr) {
-          lastMergedListEnd->next = head;
-          lastMergedListEnd = tail;
-        } else {
-          lastMergedListEnd = tail;
+        ListNode *l2 = ptr;
+
+        for (int i = 0; i < subLength && ptr != nullptr; i++) {
+          pre = ptr;
+          ptr = ptr->next;
         }
 
-        if (nextPtr == nullptr) {
-          nextPtr = head;
-        }
+        pre->next = nullptr;
+
+        auto &&[s, e] = mergeTwoSortedList(l1, l2);
+        end->next = s;
+        end = e;
       }
-      ptr = nextPtr;
     }
-
-    return ptr;
+    return aux->next;
   }
 };
 // @lc code=end
