@@ -34,17 +34,14 @@ struct TreeNode {
  */
 class Solution {
 private:
-  unordered_map<int, int> table{};
-
-  TreeNode *buildTreeHelper(vector<int> &inorder, vector<int> &postorder,
-                            int inorderStart, int inorderEnd,
-                            int &postorderEnd) {
+  TreeNode *buildTreeHelper(unordered_map<int, int> &table,
+                            vector<int> &postorder, int inorderStart,
+                            int inorderEnd, int &postorderEnd) {
     if (inorderStart > inorderEnd) {
       return nullptr;
     }
 
-    int root = postorder[postorderEnd];
-    postorderEnd--;
+    int root = postorder[postorderEnd--];
 
     TreeNode *node = new TreeNode{root};
 
@@ -53,10 +50,10 @@ private:
     // Here, we must handle the right first, because the postorder order
     // is leftTree, rightTree. Until we handle all the rightTree we could
     // handle leftTree.
-    node->right = buildTreeHelper(inorder, postorder, index + 1, inorderEnd,
-                                  postorderEnd);
+    node->right =
+        buildTreeHelper(table, postorder, index + 1, inorderEnd, postorderEnd);
 
-    node->left = buildTreeHelper(inorder, postorder, inorderStart, index - 1,
+    node->left = buildTreeHelper(table, postorder, inorderStart, index - 1,
                                  postorderEnd);
 
     return node;
@@ -64,13 +61,15 @@ private:
 
 public:
   TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
+    unordered_map<int, int> table{};
+
     for (int i = 0; i < inorder.size(); ++i) {
       table[inorder[i]] = i;
     }
 
     int postorderSize = postorder.size() - 1;
 
-    return buildTreeHelper(inorder, postorder, 0, inorder.size() - 1,
+    return buildTreeHelper(table, postorder, 0, inorder.size() - 1,
                            postorderSize);
   }
 };

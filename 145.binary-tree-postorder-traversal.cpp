@@ -49,20 +49,21 @@ public:
   vector<int> postorderTraversal(TreeNode *root) {
     vector<int> ans{};
     stack<TreeNode *> st{};
-    TreeNode *pre{};
-    while (root || !st.empty()) {
-      while (root) {
-        st.push(root);
-        root = root->left;
+    TreeNode *pre{nullptr}, *ptr = root;
+    while (ptr != nullptr || !st.empty()) {
+      while (ptr != nullptr) {
+        st.push(ptr);
+        ptr = ptr->left;
       }
+
       if (!st.empty()) {
-        TreeNode *node = st.top();
-        if (node->right == nullptr || node->right == pre) {
-          ans.push_back(node->val);
-          pre = node;
+        TreeNode *cur = st.top();
+        if (cur->right == nullptr || cur->right == pre) {
+          ans.push_back(cur->val);
+          pre = cur;
           st.pop();
         } else {
-          root = node->right;
+          ptr = cur->right;
         }
       }
     }

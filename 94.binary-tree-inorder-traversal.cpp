@@ -34,21 +34,23 @@ struct TreeNode {
 class Solution {
 public:
   vector<int> inorderTraversal(TreeNode *root) {
-    stack<TreeNode *> st;
     vector<int> ans{};
-    while (root != nullptr || !st.empty()) {
-      while (root != nullptr) {
-        st.push(root);
-        root = root->left;
+    stack<TreeNode *> st{};
+
+    TreeNode *ptr = root;
+    while (ptr != nullptr || !st.empty()) {
+      while (ptr != nullptr) {
+        st.push(ptr);
+        ptr = ptr->left;
       }
 
       if (!st.empty()) {
-        TreeNode *node = st.top();
-        ans.push_back(node->val);
+        ans.push_back(st.top()->val);
+        ptr = st.top()->right;
         st.pop();
-        root = node->right;
       }
     }
+
     return ans;
   }
 };

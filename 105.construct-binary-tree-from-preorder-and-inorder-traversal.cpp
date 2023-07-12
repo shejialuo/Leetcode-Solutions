@@ -33,11 +33,9 @@ struct TreeNode {
  */
 class Solution {
 private:
-  unordered_map<int, int> table{};
-
-  TreeNode *buildTreeHelper(vector<int> &preorder, vector<int> &inorder,
-                            int inorderStart, int inorderEnd,
-                            int &preorderIndex) {
+  TreeNode *buildTreeHelper(vector<int> &preorder,
+                            unordered_map<int, int> &table, int inorderStart,
+                            int inorderEnd, int &preorderIndex) {
     if (inorderStart > inorderEnd) {
       return nullptr;
     }
@@ -48,22 +46,24 @@ private:
     TreeNode *node = new TreeNode{root};
     preorderIndex++;
 
-    node->left = buildTreeHelper(preorder, inorder, inorderStart, index - 1,
+    node->left = buildTreeHelper(preorder, table, inorderStart, index - 1,
                                  preorderIndex);
-    node->right = buildTreeHelper(preorder, inorder, index + 1, inorderEnd,
-                                  preorderIndex);
+    node->right =
+        buildTreeHelper(preorder, table, index + 1, inorderEnd, preorderIndex);
 
     return node;
   }
 
 public:
   TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+    unordered_map<int, int> table{};
+
     for (int i = 0; i < inorder.size(); ++i) {
       table[inorder[i]] = i;
     }
 
     int preorderIndex = 0;
-    return buildTreeHelper(preorder, inorder, 0, inorder.size() - 1,
+    return buildTreeHelper(preorder, table, 0, inorder.size() - 1,
                            preorderIndex);
   }
 };

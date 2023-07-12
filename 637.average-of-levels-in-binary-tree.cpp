@@ -36,8 +36,9 @@ public:
   vector<double> averageOfLevels(TreeNode *root) {
     queue<TreeNode *> qu;
     vector<double> ans{};
-    if (root != nullptr)
+    if (root != nullptr) {
       qu.push(root);
+    }
     while (!qu.empty()) {
       int size = qu.size();
       long sum = 0;

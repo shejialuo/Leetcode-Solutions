@@ -53,7 +53,7 @@ public:
           qu.push(node->right);
         }
       }
-      ans.push_back(move(levelNode));
+      ans.push_back(std::move(levelNode));
     }
     return ans;
   }

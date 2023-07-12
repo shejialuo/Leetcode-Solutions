@@ -36,15 +36,15 @@ public:
   vector<int> preorderTraversal(TreeNode *root) {
     vector<int> ans{};
     stack<TreeNode *> st;
-    while (root != nullptr || !st.empty()) {
-      while (root != nullptr) {
-        ans.push_back(root->val);
-        st.push(root);
-        root = root->left;
+    TreeNode *ptr = root;
+    while (ptr != nullptr || !st.empty()) {
+      while (ptr != nullptr) {
+        ans.push_back(ptr->val);
+        st.push(ptr);
+        ptr = ptr->left;
       }
       if (!st.empty()) {
-        TreeNode *node = st.top();
-        root = node->right;
+        ptr = st.top()->right;
         st.pop();
       }
     }

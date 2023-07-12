@@ -62,7 +62,7 @@ public:
         }
         qu.pop();
       }
-      ans.push_back(move(layer));
+      ans.push_back(std::move(layer));
     }
     return ans;
   }
