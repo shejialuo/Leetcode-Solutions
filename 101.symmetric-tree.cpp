@@ -44,8 +44,9 @@ private:
 
 public:
   bool isSymmetric(TreeNode *root) {
-    if (root == nullptr)
+    if (root == nullptr) {
       return false;
+    }
     return isSymmetricHelper(root->left, root->right);
   }
 };
