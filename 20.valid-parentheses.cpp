@@ -17,13 +17,13 @@ using namespace std;
 class Solution {
 public:
   bool isValid(string s) {
-    unordered_map<char, char> hash{{'(', ')'}, {'[', ']'}, {'{', '}'}};
+    unordered_map<char, char> table{{'(', ')'}, {'[', ']'}, {'{', '}'}};
     stack<char> st;
     for (const char c : s) {
       if (c == '(' || c == '[' || c == '{') {
         st.push(c);
       } else {
-        if (st.empty() || c != hash[st.top()]) {
+        if (st.empty() || c != table[st.top()]) {
           return false;
         } else {
           st.pop();

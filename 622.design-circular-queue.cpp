@@ -11,7 +11,7 @@ using namespace std;
 class MyCircularQueue {
 private:
   vector<int> data{};
-  int front = 0, rear = 0, count = 0;
+  int rear = 0, front = 0, count = 0;
 
 public:
   MyCircularQueue(int k) { data.resize(k); }
@@ -20,8 +20,8 @@ public:
     if (isFull()) {
       return false;
     }
-    data[front] = value;
-    front = (front + 1) % data.size();
+    data[rear] = value;
+    rear = (rear + 1) % data.size();
     count++;
     return true;
   }
@@ -30,7 +30,7 @@ public:
     if (isEmpty()) {
       return false;
     }
-    rear = (rear + 1) % data.size();
+    front = (front + 1) % data.size();
     count--;
     return true;
   }
@@ -39,22 +39,22 @@ public:
     if (isEmpty()) {
       return -1;
     }
-    return data[rear];
+    return data[front];
   }
 
   int Rear() {
     if (isEmpty()) {
       return -1;
     }
-    if (front - 1 < 0) {
-      return data[front - 1 + data.size()];
+    if (rear - 1 < 0) {
+      return data[rear - 1 + data.size()];
     }
-    return data[front - 1];
+    return data[rear - 1];
   }
 
-  bool isEmpty() { return count == 0; }
+  bool isEmpty() { return rear == front; }
 
-  bool isFull() { return count == data.size(); }
+  bool isFull() { return (rear + 1) % data.size() == front; }
 };
 
 /**

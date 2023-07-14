@@ -14,27 +14,28 @@ using namespace std;
  * The question is that how to generate the well-formed
  * parentheses, it's super easy, we should count there
  * are how many left brackets and right brackets we have
- * assigned to make sure that the parenthese is well-formed.
+ * assigned to make sure that the parentheses is well-formed.
  */
 
 // @lc code=start
 class Solution {
 private:
-  void helper(string &s, vector<string> &ans, int i, int n, int leftBracket,
+  void helper(string &s, vector<string> &ans, int i, int leftBracket,
               int rightBracket) {
-    // end case
-    if (i == 2 * n) {
+
+    if (i == s.size()) {
       ans.push_back(s);
       return;
     }
 
-    if (leftBracket != n) {
+    if (leftBracket < s.size() / 2) {
       s[i] = '(';
-      helper(s, ans, i + 1, n, leftBracket + 1, rightBracket);
+      helper(s, ans, i + 1, leftBracket + 1, rightBracket);
     }
+
     if (rightBracket < leftBracket) {
       s[i] = ')';
-      helper(s, ans, i + 1, n, leftBracket, rightBracket + 1);
+      helper(s, ans, i + 1, leftBracket, rightBracket + 1);
     }
   }
 
@@ -43,7 +44,7 @@ public:
     vector<string> ans{};
     string s{};
     s.resize(2 * n);
-    helper(s, ans, 0, n, 0, 0);
+    helper(s, ans, 0, 0, 0);
     return ans;
   }
 };

@@ -17,30 +17,32 @@ using namespace std;
 // @lc code=start
 class Solution {
 private:
-  vector<string> result{};
-
   vector<string> letter{"abc", "def",  "ghi", "jkl",
                         "mno", "pqrs", "tuv", "wxyz"};
 
-  void helper(string &str, const string &digits, int i) {
-    if (i == digits.size()) {
+  void helper(vector<string> &result, string &str, const string &digits,
+              int i) {
+    if (i == str.size()) {
       result.push_back(str);
-    } else {
-      int digit = digits[i] - '0';
-      for (char c : letter[digit - 2]) {
-        str[i] = c;
-        helper(str, digits, i + 1);
-      }
+      return;
+    }
+
+    for (char c : letter[digits[i] - '2']) {
+      str[i] = c;
+      helper(result, str, digits, i + 1);
     }
   }
 
 public:
   vector<string> letterCombinations(string digits) {
+
+    vector<string> result{};
+    if (digits.empty()) {
+      return result;
+    }
     string str{};
     str.resize(digits.size());
-    if (digits.empty())
-      return result;
-    helper(str, digits, 0);
+    helper(result, str, digits, 0);
     return result;
   }
 };
