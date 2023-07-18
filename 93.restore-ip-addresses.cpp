@@ -13,32 +13,21 @@ class Solution {
 private:
   void restoreIpAddressesHelper(int start, int field, string &s,
                                 vector<string> &one, vector<string> &ans) {
-    if (field > 4) {
-      return;
-    }
 
-    if (start >= s.size()) {
-      if (field == 4) {
-        string result{};
-        for (int i = 0; i < one.size() - 1; ++i) {
-          result += one[i] + ".";
-        }
-        result += one.back();
-        ans.push_back(std::move(result));
+    if (field == 4 && start == s.size()) {
+      string ip{};
+      for (int i = 0; i < one.size() - 1; i++) {
+        ip += one[i] + ".";
       }
+      ip += one.back();
+      ans.push_back(std::move(ip));
+
       return;
     }
 
-    int length = 3;
-    if (s.size() - start < 3) {
-      length = s.size() - start;
-    }
+    int loopLength = s[start] == '0' ? 1 : 3;
 
-    if (s[start] == '0') {
-      length = 1;
-    }
-
-    for (int i = 0; i < length; ++i) {
+    for (int i = 0; i < loopLength && start + i < s.size(); i++) {
       string sub = s.substr(start, i + 1);
       if (stoi(sub) <= 255) {
         one.push_back(sub);

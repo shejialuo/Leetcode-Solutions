@@ -22,16 +22,17 @@ class Solution {
 private:
   vector<vector<int>> ans{};
   vector<int> combination{};
-  void combinationSumHelper(vector<int> &candiates, int index, int sum,
+  void combinationSumHelper(vector<int> &candidates, int index, int sum,
                             int target) {
-    if (sum > target) {
-      return;
-    } else if (sum == target) {
+
+    if (sum == target) {
       ans.push_back(combination);
-    } else {
-      for (int i = index; i < candiates.size(); ++i) {
-        combination.push_back(candiates[i]);
-        combinationSumHelper(candiates, i, sum + candiates[i], target);
+    }
+
+    for (int i = index; i < candidates.size(); i++) {
+      if (sum + candidates[i] <= target) {
+        combination.push_back(candidates[i]);
+        combinationSumHelper(candidates, i, sum + candidates[i], target);
         combination.pop_back();
       }
     }

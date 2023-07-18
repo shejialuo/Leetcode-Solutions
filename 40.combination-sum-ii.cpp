@@ -17,8 +17,6 @@ private:
     if (sum == target) {
       ans.push_back(one);
       return;
-    } else if (sum > target) {
-      return;
     }
 
     for (int i = index; i < candidates.size(); ++i) {
@@ -27,10 +25,12 @@ private:
         continue;
       }
 
-      one.push_back(candidates[i]);
-      combinationSum2Helper(i + 1, sum + candidates[i], target, candidates, one,
-                            ans);
-      one.pop_back();
+      if (sum + candidates[i] <= target) {
+        one.push_back(candidates[i]);
+        combinationSum2Helper(i + 1, sum + candidates[i], target, candidates,
+                              one, ans);
+        one.pop_back();
+      }
     }
   }
 

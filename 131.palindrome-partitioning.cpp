@@ -13,7 +13,7 @@ class Solution {
 private:
   /**
    * @brief This problem is very interesting. We should divide the problem
-   * into smaller. For eaxmple, For "c1c2c3c4", we could divide it to the
+   * into smaller. For example, For "c1c2c3c4", we could divide it to the
    * subproblem. "c1 <subproblem>", "c1c2<subproblem>" and so on
    *
    */
@@ -29,13 +29,13 @@ private:
 
   void partitionHelper(int startIndex, string &s, vector<string> &one,
                        vector<vector<string>> &ans) {
-    if (startIndex >= s.size()) {
+    if (startIndex == s.size()) {
       ans.push_back(one);
       return;
     }
-    int start = startIndex;
+
     for (int i = startIndex; i < s.size(); i++) {
-      string sub = s.substr(start, i - start + 1);
+      string sub = s.substr(startIndex, i - startIndex + 1);
       if (isPalindrome(sub)) {
         one.push_back(sub);
         partitionHelper(i + 1, s, one, ans);

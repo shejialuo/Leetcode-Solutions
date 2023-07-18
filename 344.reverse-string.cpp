@@ -11,10 +11,10 @@ using namespace std;
 class Solution {
 public:
   void reverseString(vector<char> &s) {
-    int pre = 0;
+    int start = 0;
     int end = s.size() - 1;
-    while (pre < end) {
-      swap(s[pre++], s[end--]);
+    while (start < end) {
+      swap(s[start++], s[end--]);
     }
   }
 };
