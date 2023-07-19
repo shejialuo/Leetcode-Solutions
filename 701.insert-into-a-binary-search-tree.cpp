@@ -30,8 +30,8 @@ struct TreeNode {
 class Solution {
 public:
   TreeNode *insertIntoBST(TreeNode *root, int val) {
-    TreeNode *ptr = root;
-    TreeNode *parent = nullptr;
+    TreeNode *ptr = root, *parent = nullptr;
+
     while (ptr != nullptr) {
       parent = ptr;
       if (ptr->val > val) {
@@ -42,16 +42,15 @@ public:
     }
 
     TreeNode *node = new TreeNode{val};
-    if (parent == nullptr) {
-      root = node;
-    } else {
+    if (parent != nullptr) {
       if (parent->val > val) {
         parent->left = node;
       } else {
         parent->right = node;
       }
+    } else {
+      return node;
     }
-
     return root;
   }
 };

@@ -30,16 +30,18 @@ struct TreeNode {
 class Solution {
 public:
   TreeNode *searchBST(TreeNode *root, int val) {
-    while (root != nullptr) {
-      if (root->val == val) {
-        return root;
-      } else if (root->val > val) {
-        root = root->left;
+    TreeNode *ptr = root;
+    while (ptr != nullptr) {
+      if (ptr->val == val) {
+        return ptr;
+        break;
+      } else if (ptr->val > val) {
+        ptr = ptr->left;
       } else {
-        root = root->right;
+        ptr = ptr->right;
       }
     }
-    return nullptr;
+    return ptr;
   }
 };
 // @lc code=end

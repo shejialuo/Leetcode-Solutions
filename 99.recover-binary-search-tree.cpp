@@ -39,19 +39,17 @@ private:
    * be a corner case when i + 1 = j.
    *
    */
-  void recoverTreeHelper(TreeNode *node, TreeNode **pre, TreeNode **p1,
-                         TreeNode **p2) {
+  void recoverTreeHelper(TreeNode *node, TreeNode *&pre, TreeNode *&p1,
+                         TreeNode *&p2) {
     if (node != nullptr) {
       recoverTreeHelper(node->left, pre, p1, p2);
-      if ((*pre) != nullptr) {
-        if ((*pre)->val > node->val) {
-          *p2 = node;
-          if ((*p1) == nullptr) {
-            *p1 = *pre;
-          }
+      if (pre != nullptr && pre->val > node->val) {
+        if (p1 == nullptr) {
+          p1 = pre;
         }
+        p2 = node;
       }
-      *pre = node;
+      pre = node;
       recoverTreeHelper(node->right, pre, p1, p2);
     }
   }
@@ -88,7 +86,7 @@ public:
   void recoverTree(TreeNode *root) {
     // recoverTreeIterative(root);
     TreeNode *pre = nullptr, *p1 = nullptr, *p2 = nullptr;
-    recoverTreeHelper(root, &pre, &p1, &p2);
+    recoverTreeHelper(root, pre, p1, p2);
     swap(p1->val, p2->val);
   }
 };

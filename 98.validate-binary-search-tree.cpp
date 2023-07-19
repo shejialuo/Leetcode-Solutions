@@ -10,11 +10,12 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
-#include <stack>
 #include <limits>
+#include <stack>
 using namespace std;
 
 // @lc code=start
@@ -26,24 +27,37 @@ using namespace std;
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
-public:
-  bool isValidBST(TreeNode* root) {
-    stack<TreeNode*> st{};
-    TreeNode* node = root;
+private:
+  bool isValidBSTHelper(TreeNode *&pre, TreeNode *node) {
+    if (node != nullptr) {
+      bool okLeft = isValidBSTHelper(pre, node->left);
+      if (pre != nullptr && pre->val >= node->val) {
+        return false;
+      }
+      pre = node;
+      return okLeft && isValidBSTHelper(pre, node->right);
+    }
+    return true;
+  }
+
+  bool isValidBSTIterative(TreeNode *root) {
+    stack<TreeNode *> st{};
+    TreeNode *node = root;
     long maxNum = numeric_limits<long>::min();
-    while(node != nullptr || !st.empty()){
-      while(node != nullptr) {
+    while (node != nullptr || !st.empty()) {
+      while (node != nullptr) {
         st.push(node);
         node = node->left;
       }
-      if(!st.empty()) {
-        TreeNode* stackOnTop = st.top();
+      if (!st.empty()) {
+        TreeNode *stackOnTop = st.top();
         st.pop();
-        if(stackOnTop->val > maxNum) {
+        if (stackOnTop->val > maxNum) {
           maxNum = stackOnTop->val;
           node = stackOnTop->right;
         } else {
@@ -53,6 +67,11 @@ public:
     }
     return true;
   }
+
+public:
+  bool isValidBST(TreeNode *root) {
+    TreeNode *pre = nullptr;
+    return isValidBSTHelper(pre, root);
+  }
 };
 // @lc code=end
-

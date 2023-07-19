@@ -8,13 +8,13 @@
 using namespace std;
 
 /*
-  * Actually, we could brute-forcely solve this question,
-  * just use dfs for every subTree. However, there would
-  * be many overlaps.
-  *
-  * So use dynamic programming just remember the prefix we
-  * add. Simple idea.
-*/
+ * Actually, we could brute-forcedly solve this question,
+ * just use dfs for every subTree. However, there would
+ * be many overlaps.
+ *
+ * So use dynamic programming just remember the prefix we
+ * add. Simple idea.
+ */
 
 struct TreeNode {
   int val;
@@ -22,7 +22,8 @@ struct TreeNode {
   TreeNode *right;
   TreeNode() : val(0), left(nullptr), right(nullptr) {}
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 // @lc code=start
@@ -34,30 +35,33 @@ struct TreeNode {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 private:
-  unordered_map<long, int> prefix {};
-  int pathSumHelper(TreeNode* node, long sum ,int targetSum) {
-    if(node != nullptr) {
-      int ret = 0;
+  unordered_map<long, int> prefix{};
+  int pathSumHelper(TreeNode *node, long sum, int targetSum) {
+    if (node != nullptr) {
+      int ans = 0;
       sum += node->val;
-      ret += prefix[sum - targetSum];
+      ans += prefix[sum - targetSum];
+
       prefix[sum]++;
-      ret += pathSumHelper(node->left, sum, targetSum);
-      ret += pathSumHelper(node->right, sum, targetSum);
+      ans += pathSumHelper(node->left, sum, targetSum);
+      ans += pathSumHelper(node->right, sum, targetSum);
       prefix[sum]--;
-      return ret;
+      sum -= node->val;
+      return ans;
     }
     return 0;
   }
+
 public:
-  int pathSum(TreeNode* root, int targetSum) {
+  int pathSum(TreeNode *root, int targetSum) {
     prefix[0] = 1;
     return pathSumHelper(root, 0, targetSum);
   }
 };
 // @lc code=end
-

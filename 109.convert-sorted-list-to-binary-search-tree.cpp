@@ -58,21 +58,19 @@ public:
       return node;
     }
 
-    ListNode *slow = head;
-    ListNode *preSlow = nullptr;
-    ListNode *fast = head;
+    ListNode *slow = head, *fast = head, *pre = nullptr;
 
     // Use slow and fast pointer to find the middle.
     while (fast != nullptr) {
       fast = fast->next;
       if (fast != nullptr) {
         fast = fast->next;
-        preSlow = slow;
+        pre = slow;
         slow = slow->next;
       }
     }
     TreeNode *node = new TreeNode(slow->val);
-    preSlow->next = nullptr;
+    pre->next = nullptr;
     node->left = sortedListToBST(head);
     node->right = sortedListToBST(slow->next);
     return node;

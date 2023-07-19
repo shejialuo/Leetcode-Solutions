@@ -4,6 +4,9 @@
  * [450] Delete Node in a BST
  */
 
+#include <memory>
+using namespace std;
+
 struct TreeNode {
   int val;
   TreeNode *left;
@@ -41,10 +44,9 @@ public:
   TreeNode *deleteNode(TreeNode *root, int key) {
     TreeNode *ptr = root;
 
-    // auxiliary node
-    TreeNode *aux = new TreeNode{-1};
+    auto aux = make_unique<TreeNode>(-1);
     aux->left = root;
-    TreeNode *parent = aux;
+    TreeNode *parent = aux.get();
 
     // search the corresponding node
     while (ptr != nullptr) {
@@ -72,10 +74,12 @@ public:
         helper(parent, ptr, ptr->left);
       } else {
 
+        // We need to find the successor here.
         TreeNode *rightNode = ptr->right;
 
         TreeNode *minNode = rightNode;
         TreeNode *minNodeParent = nullptr;
+
         while (minNode->left != nullptr) {
           minNodeParent = minNode;
           minNode = minNode->left;
@@ -93,10 +97,7 @@ public:
       }
     }
 
-    root = aux->left;
-    delete aux;
-
-    return root;
+    return aux->left;
   }
 };
 // @lc code=end
