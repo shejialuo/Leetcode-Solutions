@@ -18,16 +18,13 @@ public:
     dp[0] = 0;
     for (int i = 0; i < coins.size(); ++i) {
       for (int j = coins[i]; j <= amount; ++j) {
-        // There is a way.
         if (dp[j - coins[i]] != numeric_limits<int>::max()) {
           dp[j] = min(dp[j], dp[j - coins[i]] + 1);
         }
       }
     }
-    if (dp.back() == numeric_limits<int>::max()) {
-      return -1;
-    }
-    return dp.back();
+
+    return dp.back() == numeric_limits<int>::max() ? -1 : dp.back();
   }
 };
 // @lc code=end

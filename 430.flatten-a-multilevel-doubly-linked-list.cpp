@@ -27,28 +27,27 @@ public:
 class Solution {
 private:
   Node *flattenHelper(Node *node) {
-    Node *ptr = node;
-    Node *pre = nullptr;
+    Node *ptr = node, *pre = nullptr;
+
     while (ptr != nullptr) {
       if (ptr->child != nullptr) {
-        // Store the next
         Node *next = ptr->next;
-
-        // Connect the child
         ptr->next = ptr->child;
         ptr->child->prev = ptr;
-        Node *end = flattenHelper(ptr->child);
 
+        Node *end = flattenHelper(ptr->child);
         ptr->child = nullptr;
 
-        // Connect the end
         end->next = next;
         if (next != nullptr) {
           next->prev = end;
         }
+        pre = end;
+        ptr = next;
+      } else {
+        pre = ptr;
+        ptr = ptr->next;
       }
-      pre = ptr;
-      ptr = ptr->next;
     }
     return pre;
   }

@@ -43,12 +43,13 @@ private:
    */
   int maxPathSumHelper(TreeNode *node, int &maxSum) {
     if (node != nullptr) {
-      int left = max(maxPathSumHelper(node->left, maxSum), 0);
-      int right = max(maxPathSumHelper(node->right, maxSum), 0);
+      int left = maxPathSumHelper(node->left, maxSum);
+      int right = maxPathSumHelper(node->right, maxSum);
 
-      maxSum = max(maxSum, left + right + node->val);
+      int maxPathValue = max({left + node->val, right + node->val, node->val});
+      maxSum = max({maxSum, left + right + node->val, maxPathValue});
 
-      return node->val + max(left, right);
+      return maxPathValue;
     }
     return 0;
   }
