@@ -21,7 +21,7 @@ using namespace std;
 class Solution {
 private:
   // Defines the direction for easy compute
-  int dirs[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+  vector<vector<int>> directions{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
   // Define the Disjoint set
   class DisjointSet {
@@ -59,19 +59,16 @@ private:
   };
 
   bool isValid(int i, int j, int m, int n) {
-    if (i < 0 || i >= m || j < 0 || j >= n) {
-      return false;
-    }
-    return true;
+    return i >= 0 && i < m && j >= 0 && j < n;
   }
 
   void dfsSolutionHelper(vector<vector<char>> &grid, int i, int j, int m,
                          int n) {
     if (isValid(i, j, m, n) && grid[i][j] == '1') {
       grid[i][j] = '0';
-      for (int k = 0; k < 4; ++k) {
-        int nextI = i + dirs[k][0];
-        int nextJ = j + dirs[k][1];
+      for (auto &&direction : directions) {
+        int nextI = i + direction[0];
+        int nextJ = j + direction[1];
         dfsSolutionHelper(grid, nextI, nextJ, m, n);
       }
     }
@@ -112,9 +109,9 @@ public:
     for (int i = 0; i < m; ++i) {
       for (int j = 0; j < n; ++j) {
         if (grid[i][j] == '1') {
-          for (int k = 0; k < 4; ++k) {
-            int nextI = i + dirs[k][0];
-            int nextJ = j + dirs[k][1];
+          for (auto &&direction : directions) {
+            int nextI = i + direction[0];
+            int nextJ = j + direction[1];
 
             if (isValid(nextI, nextJ, m, n) && grid[nextI][nextJ] == '1') {
               set.connect(i * n + j, nextI * n + nextJ);
