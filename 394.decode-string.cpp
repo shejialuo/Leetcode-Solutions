@@ -41,7 +41,7 @@ private:
       } else if (isdigit(c)) {
         accumulate = (c - '0') + (accumulate * 10);
       } else {
-        decode.insert(decode.end(), c);
+        decode.push_back(c);
       }
     }
     return decode;

@@ -4,34 +4,54 @@
  * [79] Word Search
  */
 
-#include <vector>
 #include <string>
+#include <vector>
 using namespace std;
 
 // @lc code=start
 class Solution {
 private:
-  bool existHelper(vector<vector<char>>& board, int i, int j, string& word) {
-    if(word.size() == 0) return true;
-    int m = board.size(), n = board[0].size();
-    if (i >= m || i < 0 || j >= n || j < 0 || board[i][j] != word[0]) return false;
-    char c = board[i][j];
-    board[i][j] = '*';
-    string s = word.substr(1);
-    bool ans = existHelper(board, i + 1, j, s)
-            || existHelper(board, i - 1, j, s)
-            || existHelper(board, i, j + 1, s)
-            || existHelper(board, i, j - 1, s);
-    board[i][j] = c;
-    return ans;
+  vector<vector<int>> directions{{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
 
+  bool isValid(int i, int j, int m, int n) {
+    return i >= 0 && i < m && j < n && j >= 0;
   }
-public:
-  bool exist(vector<vector<char>>& board, string word) {
 
-    for(int i = 0; i < board.size(); ++i) {
-      for(int j = 0; j < board[0].size(); ++j) {
-        if(existHelper(board, i, j, word))
+  bool existHelper(vector<vector<char>> &board, int i, int j, int index,
+                   string &word) {
+    if (board[i][j] != word[index]) {
+      return false;
+    }
+
+    if (index == word.size() - 1) {
+      return true;
+    }
+
+    int m = board.size(), n = board[0].size();
+
+    const char c = board[i][j];
+    board[i][j] = '*';
+
+    for (auto &&direction : directions) {
+      int nextI = i + direction[0];
+      int nextJ = j + direction[1];
+      if (isValid(nextI, nextJ, m, n) && board[nextI][nextJ] != '*') {
+        bool result = existHelper(board, nextI, nextJ, index + 1, word);
+        if (result) {
+          return true;
+        }
+      }
+    }
+    board[i][j] = c;
+    return false;
+  }
+
+public:
+  bool exist(vector<vector<char>> &board, string word) {
+
+    for (int i = 0; i < board.size(); ++i) {
+      for (int j = 0; j < board[0].size(); ++j) {
+        if (existHelper(board, i, j, 0, word))
           return true;
       }
     }
@@ -39,4 +59,3 @@ public:
   }
 };
 // @lc code=end
-

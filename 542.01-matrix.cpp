@@ -67,7 +67,5 @@ public:
     }
     return ans;
   }
-}
-
-;
+};
 // @lc code=end

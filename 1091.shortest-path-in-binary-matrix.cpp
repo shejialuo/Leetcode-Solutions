@@ -13,10 +13,7 @@ using namespace std;
 class Solution {
 private:
   bool isValid(int i, int j, int m, int n) {
-    if (i < 0 || i >= m || j < 0 || j >= n) {
-      return false;
-    }
-    return true;
+    return i >= 0 && i < m && j >= 0 && j < n;
   }
 
   vector<vector<int>> directions{
